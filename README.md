@@ -49,7 +49,7 @@ SoulSync Semester Project/
     ├── server.js                 # Backend entry point
     ├── package.json
     ├── package-lock.json
-    └── .env                      # Environment variables (not committed)
+    └── .env                      # Environment variables 
 ```
 
 ## 🛠️ Tech Stack
