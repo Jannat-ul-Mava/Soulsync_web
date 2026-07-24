@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../Css/bot_2.css">
+     <script src="../Javascript/bot_2.js" defer></script>
+    <title>SoulSync - Mental Wellness</title>
+</head>
+<body>
+<a href="../Html/dashboard.html" class="home-btn">🏠</a>
+<div class="chat-container">
+
+    <div class="chat-header">
+        <div class="title-section">
+            <h1>🌙 SoulSync <span class="badge">Mental Wellness</span></h1>
+        </div>
+        <div class="status-section">
+            <span class="status-dot"></span>
+            <span id="statusText">Ready to help 💙</span>
+        </div>
+    </div>
+
+    <!-- Welcome Screen -->
+    <div id="welcomeScreen">
+        <div class="welcome-card">
+            <p class="intro">✨ <strong>Welcome to SoulSync!</strong> Your mental wellness companion is here.</p>
+            <p class="sub">A compassionate AI support system designed to listen without judgment, any time you need it.</p>
+
+            <div class="capabilities">
+                <div class="cap">🗣️ Talk through what's on your mind</div>
+                <div class="cap">😔 Work through stress or anxiety</div>
+                <div class="cap">💪 Get motivational support</div>
+                <div class="cap">🧘 Breathing &amp; grounding exercises</div>
+                <div class="cap">🌙 Build healthy daily routines</div>
+                <div class="cap">💬 Safe space — no judgment</div>
+            </div>
+
+            <button class="open-btn" onclick="openChat()">
+                💬 Start Chatting — I'm here to help
+            </button>
+
+            <p class="privacy">🔒 Private &amp; confidential — this is your safe space.</p>
+        </div>
+    </div>
+
+    <!-- Chat Screen — Support AI widget renders here -->
+    <div id="chatScreen">
+        <div id="chatLoading">
+            <div class="spinner"></div>
+            <span>Connecting your wellness assistant…</span>
+        </div>
+    </div>
+
+    <div class="chat-footer">💙 Powered by Support AI — Here for you 24/7</div>
+
+</div>
+
+
+</body>
+</html>

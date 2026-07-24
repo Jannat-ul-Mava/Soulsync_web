@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Water Sort Puzzle</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Quicksand:wght@500;600&display=swap" rel="water_sort_game"/>
+<link rel="stylesheet" href="../Css/water_sort_game.css">
+   <script src="../Javascript/water_sort_game.js" defer></script>
+</head>
+<body>
+
+<!-- ══ MENU ══════════════════════════════════════════════ -->
+<div id="screen-menu" class="screen active">
+     <a href="game_home_page.html" class="home-btn">🏠</a>
+  <div class="menu-card">
+    <div class="menu-title">💧 Water Sort</div>
+    <div class="menu-sub">Choose Your Difficulty</div>
+    <button class="diff-btn easy"   onclick="startGame('easy')">🟢 Easy</button>
+    <button class="diff-btn medium" onclick="startGame('medium')">🟠 Medium</button>
+    <button class="diff-btn hard"   onclick="startGame('hard')">🔴 Hard</button>
+  </div>
+</div>
+
+<!-- ══ GAME ═══════════════════════════════════════════════ -->
+<div id="screen-game" class="screen">
+
+  <!-- Only shuffle + exit visible during play -->
+  <div class="game-bar">
+    <button class="bar-btn exit-btn" onclick="showMenu()">✕ Exit</button>
+    <button class="bar-btn shuffle"  onclick="shuffleGame()">🔀 Shuffle</button>
+  </div>
+
+  <div id="tubes-stage"></div>
+</div>
+
+<!-- ══ WIN ════════════════════════════════════════════════ -->
+<div id="screen-win" class="screen">
+  <div class="win-title">🏆 Level Complete! 🏆</div>
+  <div class="win-sub">Choose your next move:</div>
+  <button class="win-btn replay"  onclick="replayLevel()">🔄 Replay Same Level</button>
+  <button class="win-btn newgame" onclick="showMenu()">🎮 New Game</button>
+  <button class="win-btn exitwin" onclick="showMenu()">✕ Exit</button>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoulSync — Assessment Results</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../Css/result.css">
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header">
+  <h1 class="header-title">ASSESSMENT RESULTS</h1>
+</header>
+
+<!-- ══ MAIN ══ -->
+<main class="main-content" id="printArea">
+
+  <!-- Total Score Card -->
+  <div class="card" id="totalScoreCard">
+    <h2 class="card-title">Your Total Score</h2>
+    <div class="score-legend">
+      <span class="legend-dot mild"></span><span>0–38 (Mild)</span>
+      <span class="legend-dot moderate"></span><span>39–76 (Moderate)</span>
+      <span class="legend-dot severe"></span><span>77+ (Severe)</span>
+    </div>
+    <div class="score-number" id="totalScoreNum">—</div>
+    <div class="score-bar-wrap">
+      <div class="score-bar-track">
+        <div class="score-bar-fill" id="totalBarFill"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Breakdown Card -->
+  <div class="card" id="breakdownCard">
+    <h2 class="card-title">Score Break-down</h2>
+    <div class="score-legend">
+      <span class="legend-dot mild"></span><span>0–12 (Mild)</span>
+      <span class="legend-dot moderate"></span><span>13–24 (Moderate)</span>
+      <span class="legend-dot severe"></span><span>25+ (Severe)</span>
+    </div>
+    <div class="breakdown-list" id="breakdownList"></div>
+  </div>
+
+  <!-- Recommendation Card -->
+  <div class="card recommend-card" id="recommendCard">
+    <p class="recommend-text" id="recommendText">Loading…</p>
+  </div>
+
+</main>
+
+<!-- ══ FOOTER ACTIONS ══ -->
+<footer class="site-footer">
+  <button class="btn-secondary" onclick="window.location.href='test.html'">🏠 Back to Dashboard</button>
+  <div class="action-group">
+    <button class="btn-action" onclick="savePDF()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      Save as PDF
+    </button>
+    <button class="btn-action" onclick="printResults()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>
+      </svg>
+      Print
+    </button>
+    <button class="btn-primary" onclick="scheduleAppointment()">
+      📅 Schedule Appointment
+    </button>
+  </div>
+</footer>
+
+<script src="/JavaScript/Result.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background-image: url("../Html/resources/game_background_home_page.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: clamp(10px, 3vw, 30px);
+    box-sizing: border-box;
+}
+
+.home-btn {
+    position: absolute;
+    top: clamp(10px, 2vw, 20px);
+    left: clamp(10px, 2vw, 20px);
+    background: #1e3a5f;
+    color: white;
+    text-decoration: none;
+    font-size: clamp(14px, 2.5vw, 20px);
+    padding: clamp(6px, 1.2vw, 10px) clamp(8px, 1.4vw, 12px);
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;               /* cards wrap into rows on small screens */
+    gap: clamp(14px, 3vw, 40px);
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 900px;
+}
+
+.card {
+    width: clamp(140px, 28vw, 250px);
+    background: #dffdf8d5;
+    border-radius: clamp(8px, 2vw, 15px);
+    text-align: center;
+    padding: clamp(10px, 2vw, 20px);
+    text-decoration: none;
+    color: black;
+    border: 2px solid black;
+    transition: transform 0.3s;
+    box-sizing: border-box;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card img {
+    width: 100%;
+    height: clamp(80px, 12vw, 150px);
+    object-fit: cover;
+    border-radius: clamp(6px, 1.2vw, 10px);
+}
+
+.card h2 {
+    margin: clamp(6px, 1vw, 10px) 0;
+    font-size: clamp(13px, 2.2vw, 20px);
+}
+
+.card p {
+    font-size: clamp(10px, 1.5vw, 14px);
+    margin: 0;
+}
+
+/* Stack cards vertically on very small screens */
+@media (max-width: 480px) {
+    body {
+        overflow-y: auto;
+        height: auto;
+        min-height: 100vh;
+        padding: 60px 16px 24px;
+        align-items: flex-start;
+    }
+
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: min(320px, 90vw);
+    }
+
+    .card img {
+        height: 120px;
+    }
+}

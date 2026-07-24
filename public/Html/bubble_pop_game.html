@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="bubble_pop_game"/>
+<link rel="stylesheet" href="../Css/bubble_pop_game.css">
+   <script src="../Javascript/bubble_pop_game.js" defer></script>
+  <title>Bubble Pop Wrap</title>
+  
+</head>
+<body>
+<div id="app">
+  <a href="game_home_page.html" class="home-btn">🏠</a>
+  <button id="sound-toggle" title="Toggle sound">🔊</button>
+
+  <div class="title-row">
+    <div class="deco"><span class="sm"></span><span class="md"></span><span class="sm"></span></div>
+    <h1>Bubble Pop</h1>
+    <div class="deco"><span class="sm"></span><span class="md"></span><span class="sm"></span></div>
+  </div>
+
+  <div id="counter">Popped: 0 / 160</div>
+
+  <div id="wrap-container">
+    <div id="wrap"></div>
+  </div>
+
+  <div id="complete-msg">🎉 All bubbles popped! Amazing!</div>
+
+  <div class="controls">
+    <button class="btn btn-reset"  onclick="resetAll()">↺ Reset All</button>
+    <button class="btn btn-popall" onclick="popAll()">✸ Pop All!</button>
+    <button class="btn btn-mode"   onclick="toggleMode()" id="mode-btn">🖱 Hold Mode: Off</button>
+  </div>
+
+</div>
+
+</body>
+</html>

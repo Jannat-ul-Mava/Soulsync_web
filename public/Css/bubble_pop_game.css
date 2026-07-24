@@ -1,0 +1,173 @@
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(160deg, #c9e8ff 0%, #e8f4ff 60%, #d6ecff 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+.home-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: #1e3a5f;
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    padding: 10px 12px;
+    border-radius: 50%;
+}
+    #app {
+      width: 100%;
+      max-width: 860px;
+      text-align: center;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    /* Header */
+    .title-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .deco { display: flex; align-items: center; gap: 4px; }
+    .deco span { display: inline-block; border-radius: 50%; background: #90c8f7; opacity: 0.7; }
+    .deco .sm { width: 5px; height: 5px; }
+    .deco .md { width: 10px; height: 10px; background: transparent; border: 2px solid #64aee8; }
+
+    h1 {
+      font-size: clamp(20px, 5vw, 32px);
+      font-weight: 800;
+      color: #1565c0;
+      letter-spacing: -0.5px;
+    }
+
+    #counter {
+      font-size: clamp(12px, 2.5vw, 15px);
+      color: #555;
+    }
+
+    /* Wrap container — fills available width */
+    #wrap-container {
+      width: 100%;
+      background: linear-gradient(135deg, #a8d8f8 0%, #cce8ff 50%, #b8deff 100%);
+      padding: clamp(8px, 2vw, 20px);
+      border-radius: 16px;
+      border: 2px solid #7dc3f5;
+      box-shadow: 0 6px 24px rgba(30,100,200,0.12);
+    }
+
+    /* Grid scales to container — JS sets --bubble-size and columns */
+    #wrap {
+      display: grid;
+      gap: clamp(2px, 0.6vw, 5px);
+      user-select: none;
+      justify-content: center;
+    }
+
+    /* Bubble size driven by CSS variable set by JS */
+    .bubble {
+      width:  var(--bsize, 36px);
+      height: var(--bsize, 36px);
+      border-radius: 50%;
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.08s ease;
+      background: radial-gradient(circle at 35% 32%, #f0f8ff 0%, #89c6f7 40%, #3d8ee0 80%, #2068c0 100%);
+      border: 1.5px solid #5aaaf5;
+      box-shadow: inset 0 -4px 8px rgba(0,0,60,0.1), 2px 3px 6px rgba(20,80,180,0.15);
+    }
+
+    .bubble::before {
+      content: '';
+      position: absolute;
+      top: 22%; left: 22%;
+      width: 26%; height: 18%;
+      background: rgba(255,255,255,0.72);
+      border-radius: 50%;
+      transform: rotate(-30deg);
+      pointer-events: none;
+    }
+
+    .bubble:hover:not(.popped) { transform: scale(0.92); }
+
+    .bubble.popped {
+      background: radial-gradient(circle at 50% 50%, #cde7f8 0%, #b0d5f0 100%);
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+      border: 1.5px solid #9ec9e8;
+      cursor: default;
+      transform: scale(0.87);
+    }
+    .bubble.popped::before { display: none; }
+
+    .bubble.pop-anim { animation: popBubble 0.2s ease-out forwards; }
+    @keyframes popBubble {
+      0%   { transform: scale(1); }
+      35%  { transform: scale(1.22); }
+      70%  { transform: scale(0.82); }
+      100% { transform: scale(0.87); }
+    }
+
+    /* Controls */
+    .controls {
+      display: flex;
+      gap: clamp(6px, 2vw, 14px);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: clamp(9px, 2vw, 13px) clamp(14px, 3vw, 26px);
+      border-radius: 40px;
+      font-size: clamp(12px, 2.5vw, 15px);
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: filter 0.15s, transform 0.1s;
+      display: inline-flex; align-items: center; gap: 5px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.13);
+    }
+    .btn:hover  { filter: brightness(1.08); }
+    .btn:active { transform: scale(0.97); }
+    .btn-reset  { background: #2ea44f; color: #fff; }
+    .btn-popall { background: #e53935; color: #fff; }
+    .btn-mode   { background: #f59300; color: #fff; }
+
+    /* Sound toggle */
+    #sound-toggle {
+      position: absolute; top: 0; right: 0;
+      background: rgba(255,255,255,0.65);
+      border: 1.5px solid #b0d4f5;
+      border-radius: 50%;
+      width: 34px; height: 34px;
+      font-size: 15px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s;
+    }
+    #sound-toggle:hover { background: rgba(255,255,255,0.92); }
+
+    #complete-msg {
+      display: none;
+      font-size: clamp(14px, 3vw, 20px);
+      font-weight: 700;
+      color: #1565c0;
+      animation: fadeUp 0.45s ease forwards;
+    }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(-6px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    .hold-on { outline: 3px solid #f59300; }
+  

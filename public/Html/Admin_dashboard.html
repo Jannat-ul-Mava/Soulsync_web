@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoulSync - Admin Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../Css/admin_dashboard.css">
+<script src="../Javascript/admin_dashboard.js" defer></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-left">
+    <button class="hamburger" id="hamburger" onclick="toggleSidebar()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="topbar-logo">
+      <span class="logo-icon">🌿</span> SoulSync Admin
+    </div>
+  </div>
+  <div class="topbar-right">
+    <div class="admin-chip">
+      <div class="admin-chip-avatar">A</div>
+      <span>Muhammad Ali</span>
+    </div>
+    <button class="exit-btn" onclick="confirmLogout()">Log out</button>
+  </div>
+</header>
+
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar">A</div>
+      <div>
+        <div class="sidebar-name">Muhammad Ali</div>
+        <div class="sidebar-role">Administration</div>
+      </div>
+    </div>
+    <div class="sidebar-divider"></div>
+
+    <div class="sidebar-section-label">Dashboard</div>
+    <nav class="sidebar-nav">
+      <a class="nav-item active" onclick="showPage('dashboard',this)">
+        <span class="nav-icon">🏠</span> Home
+      </a>
+    </nav>
+
+    <div class="sidebar-section-label">Management</div>
+    <nav class="sidebar-nav">
+      <a class="nav-item" onclick="showPage('verify-psychologists',this)">
+        <span class="nav-icon">🧑‍⚕️</span> Psychologists
+      </a>
+      <a class="nav-item" onclick="showPage('therapy-animals',this)">
+        <span class="nav-icon">🐾</span> Therapy Animals
+      </a>
+    </nav>
+
+    <div class="sidebar-section-label">Data Management</div>
+    <nav class="sidebar-nav">
+      <a class="nav-item" onclick="showPage('edit-users',this)">
+        <span class="nav-icon">👤</span> Users
+      </a>
+      <a class="nav-item" onclick="showPage('edit-psychologists',this)">
+        <span class="nav-icon">⚕️</span> Psychologist
+      </a>
+      <a class="nav-item" onclick="showPage('appointments',this)">
+        <span class="nav-icon">📅</span> Appointments
+        <span class="nav-badge" id="pending-badge" style="display:none">0</span>
+      </a>
+      <a class="nav-item" onclick="showPage('appointment-history',this)">
+        <span class="nav-icon">📋</span> Appointment History
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="logout-sidebar-btn" onclick="confirmLogout()">← Log out</button>
+    </div>
+  </aside>
+
+  <main class="main" id="main-content">
+
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- DASHBOARD PAGE                                 -->
+    <!-- ══════════════════════════════════════════════ -->
+    <div id="page-dashboard" class="page active">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Admin Dashboard</div>
+          <div class="page-subtitle">Welcome to SoulSync Administration</div>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="refreshAll()">🔄 Refresh</button>
+      </div>
+
+      <div class="stats-grid" id="stats-grid"></div>
+
+      <!-- Cancel Requests Alert -->
+      <div id="cancel-requests-alert" style="display:none" class="alert-card">
+        <div class="alert-header">
+          <span>🔔 Pending Cancel Requests</span>
+          <span class="alert-count" id="cancel-count-badge">0</span>
+        </div>
+        <div id="cancel-requests-list"></div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="dash-section">
+          <div class="section-title">New Appointments</div>
+          <div class="data-table-wrap">
+            <div class="table-scroll">
+              <table>
+                <thead><tr>
+                  <th>ID</th><th>Doctor</th><th>Patient</th><th>Time</th><th>Date</th><th>Fee</th><th>Actions</th>
+                </tr></thead>
+                <tbody id="dash-new-appts"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="dash-section">
+          <div class="section-title">Ongoing / Confirmed Appointments</div>
+          <div class="data-table-wrap">
+            <div class="table-scroll">
+              <table>
+                <thead><tr>
+                  <th>ID</th><th>Doctor</th><th>Patient</th><th>Time</th><th>Date</th><th>Fee</th><th>Actions</th>
+                </tr></thead>
+                <tbody id="dash-ongoing-appts"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- VERIFY / MANAGE PSYCHOLOGISTS                  -->
+    <!-- ══════════════════════════════════════════════ -->
+    <div id="page-verify-psychologists" class="page">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Manage Psychologists</div>
+          <div class="page-subtitle">Verify, add or reject psychologist profiles</div>
+        </div>
+        <button class="btn btn-primary" onclick="openModal('add-psych-modal')">➕ Add New Psychologist</button>
+      </div>
+      <div class="verify-grid" id="verify-grid"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- THERAPY ANIMALS                                -->
+    <!-- ══════════════════════════════════════════════ -->
+    <div id="page-therapy-animals" class="page">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Therapy Animals</div>
+          <div class="page-subtitle">Manage therapy dogs and cats in the system</div>
+        </div>
+        <button class="btn btn-primary" onclick="openModal('add-animal-modal')">➕ Add New Animal</button>
+      </div>
+      <div class="animals-filter-bar">
+        <button class="filter-btn active" onclick="filterAnimals('all',this)">All Animals</button>
+        <button class="filter-btn" onclick="filterAnimals('Dog',this)">🐕 Dogs</button>
+        <button class="filter-btn" onclick="filterAnimals('Cat',this)">🐈 Cats</button>
+      </div>
+      <div class="animals-grid" id="animals-grid"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- USERS PAGE                                     -->
+    <!-- ══════════════════════════════════════════════ -->
+    <div id="page-edit-users" class="page">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Users</div>
+          <div class="page-subtitle">View registered patient accounts</div>
+        </div>
+        <div class="search-wrap">
+          <input class="search-input" id="user-search" placeholder="Search users..." oninput="filterUsers()">
+        </div>
+      </div>
+      <div class="data-table-wrap desktop-table">
+        <div class="table-scroll">
+          <table>
+            <thead><tr>
+              <th>ID</th><th>Full Name</th><th>Email</th><th>Phone</th><th>Date of Birth</th>
+              <th>Gender</th><th>City</th><th>Country</th><th>Account Type</th>
+              <th>Active</th><th>Email Verified</th><th>Actions</th>
+            </tr></thead>
+            <tbody id="users-tbody" value="Ali"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="mobile-card-table" id="users-cards"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- PSYCHOLOGISTS DATA TABLE                       -->
+    <!-- ══════════════════════════════════════════════ -->
+    <div id="page-edit-psychologists" class="page">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Psychologists</div>
+          <div class="page-subtitle">All registered psychologist records</div>
+        </div>
+        <div class="search-wrap">
+          <input class="search-input" id="psych-search" placeholder="Search psychologists..." oninput="filterPsychs()">
+        </div>
+      </div>
+      <div class="data-table-wrap desktop-table">
+        <div class="table-scroll">
+          <table>
+            <thead><tr>
+              <th>ID</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Phone</th>
+              <th>Gender</th><th>Specialization</th><th>Qualification</th><th>License No.</th>
+              <th>Experience</th><th>Fee (Rs.)</th><th>Location</th><th>Available Days</th>
+              <th>Status</th><th>Available</th><th>Actions</th>
+            </tr></thead>
+            <tbody id="psychs-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="mobile-card-table" id="psychs-cards"></div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- APPOINTMENTS PAGE                              -->
+    <!-- ══════════════════════════════════════════════ -->
+    <div id="page-appointments" class="page">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Appointments</div>
+          <div class="page-subtitle">Manage upcoming appointments — approve or cancel bookings</div>
+        </div>
+      </div>
+
+      <!-- Cancel Requests Banner -->
+      <div id="appt-cancel-requests" class="cancel-requests-section" style="display:none">
+        <div class="section-title" style="color:#b45309">🔔 Patient Cancel Requests</div>
+        <div id="appt-cancel-list"></div>
+      </div>
+
+      <div class="section-title">New / Scheduled Appointments</div>
+      <div class="data-table-wrap" style="border:2px solid var(--accent); margin-bottom:28px;">
+        <div class="table-scroll">
+          <table>
+            <thead><tr>
+              <th>ID</th><th>Doctor</th><th>Patient</th><th>Time</th><th>Date</th>
+              <th>Type</th><th>Fee</th><th>Status</th><th>Actions</th>
+            </tr></thead>
+            <tbody id="new-appts-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section-title">Confirmed / Ongoing Appointments</div>
+      <div class="data-table-wrap" style="margin-bottom:14px;">
+        <div class="table-scroll">
+          <table>
+            <thead><tr>
+              <th>ID</th><th>Doctor</th><th>Patient</th><th>Time</th><th>Date</th>
+              <th>Type</th><th>Fee</th><th>Status</th><th>Actions</th>
+            </tr></thead>
+            <tbody id="confirmed-appts-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="cancel-policy-note">
+        ⚠️ <strong>Cancellation Policy:</strong> Appointments cannot be cancelled within 12 hours of the scheduled time.
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- APPOINTMENT HISTORY PAGE                       -->
+    <!-- ══════════════════════════════════════════════ -->
+    <div id="page-appointment-history" class="page">
+      <div class="page-header">
+        <div>
+          <div class="page-title">Appointments History</div>
+          <div class="page-subtitle">Completed and cancelled appointment records</div>
+        </div>
+      </div>
+      <div class="data-table-wrap">
+        <div class="table-scroll">
+          <table>
+            <thead><tr>
+              <th>ID</th><th>Doctor</th><th>Patient</th><th>Time</th><th>Date</th>
+              <th>Fee</th><th>Status</th><th>Actions</th>
+            </tr></thead>
+            <tbody id="history-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- MODAL: VIEW USER                                   -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="view-user-modal" onclick="closeModalOutside(event,'view-user-modal')">
+  <div class="modal modal-wide">
+    <div class="modal-header">
+      <div class="modal-title" id="view-user-title">User Details</div>
+      <button class="modal-close" onclick="closeModal('view-user-modal')">✕</button>
+    </div>
+    <div class="modal-body" id="view-user-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('view-user-modal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- MODAL: EDIT PSYCHOLOGIST                           -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="edit-psych-modal" onclick="closeModalOutside(event,'edit-psych-modal')">
+  <div class="modal modal-wide">
+    <div class="modal-header">
+      <div class="modal-title" id="edit-psych-modal-title">Edit Psychologist</div>
+      <button class="modal-close" onclick="closeModal('edit-psych-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="ep-id">
+
+      <!-- Saving indicator -->
+      <div id="ep-saving" style="display:none;background:var(--accent-light);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:13px;color:var(--accent-hover);font-weight:600;">
+        ⏳ Saving changes to database...
+      </div>
+
+      <div class="form-section-title">Basic Information</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">First Name *</label>
+          <input class="form-input" id="ep-first-name" placeholder="e.g. Sarah">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last Name *</label>
+          <input class="form-input" id="ep-last-name" placeholder="e.g. Johnson">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Email *</label>
+          <input class="form-input" id="ep-email" type="email" placeholder="doctor@soulsync.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input class="form-input" id="ep-phone" placeholder="+92-321-...">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Gender</label>
+          <select class="form-select" id="ep-gender">
+            <option value="">Select Gender</option>
+            <option>Male</option><option>Female</option><option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Date of Birth</label>
+          <input class="form-input" id="ep-dob" type="date">
+        </div>
+      </div>
+
+      <div class="form-section-title">Professional Information</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Specialization *</label>
+          <input class="form-input" id="ep-specialization" placeholder="e.g. Clinical Psychology">
+        </div>
+        <div class="form-group">
+          <label class="form-label">License Number *</label>
+          <input class="form-input" id="ep-license" placeholder="e.g. PSY-12345">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Qualification</label>
+        <input class="form-input" id="ep-qualification" placeholder="e.g. PhD in Clinical Psychology">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Years of Experience</label>
+          <input class="form-input" id="ep-experience" type="number" min="0" placeholder="e.g. 10">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Consultation Fee (Rs.) *</label>
+          <input class="form-input" id="ep-fee" type="number" min="0" placeholder="e.g. 3000">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Clinic Location</label>
+          <input class="form-input" id="ep-location" placeholder="e.g. SoulSync Clinic, Lahore">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Available Days</label>
+          <input class="form-input" id="ep-days" placeholder="e.g. Mon,Tue,Wed,Thu,Fri">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Bio / Description</label>
+        <textarea class="form-textarea" id="ep-bio" placeholder="Brief professional bio..."></textarea>
+      </div>
+
+      <div class="form-section-title">Status &amp; Availability</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Verification Status</label>
+          <select class="form-select" id="ep-status">
+            <option value="NotChecked">Not Checked</option>
+            <option value="Verified">Verified</option>
+            <option value="NotVerified">Not Verified</option>
+          </select>
+        </div>
+        <div class="form-group" style="display:flex;align-items:flex-end;gap:20px;padding-bottom:4px;">
+          <label class="form-check">
+            <input type="checkbox" id="ep-available">
+            <span>Is Available</span>
+          </label>
+          <label class="form-check">
+            <input type="checkbox" id="ep-active">
+            <span>Is Active</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('edit-psych-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="savePsychEdit()">💾 Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- MODAL: ADD PSYCHOLOGIST                            -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="add-psych-modal" onclick="closeModalOutside(event,'add-psych-modal')">
+  <div class="modal modal-wide">
+    <div class="modal-header">
+      <div class="modal-title">Add New Psychologist</div>
+      <button class="modal-close" onclick="closeModal('add-psych-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-section-title">Basic Information</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">First Name *</label>
+          <input class="form-input" id="ap-first-name" placeholder="e.g. Sarah">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last Name *</label>
+          <input class="form-input" id="ap-last-name" placeholder="e.g. Johnson">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Email *</label>
+          <input class="form-input" id="ap-email" type="email" placeholder="doctor@soulsync.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input class="form-input" id="ap-phone" placeholder="+92-321-...">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Gender</label>
+          <select class="form-select" id="ap-gender">
+            <option value="">Select Gender</option>
+            <option>Male</option><option>Female</option><option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Date of Birth</label>
+          <input class="form-input" id="ap-dob" type="date">
+        </div>
+      </div>
+      <div class="form-section-title">Professional Information</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Specialization *</label>
+          <input class="form-input" id="ap-specialization" placeholder="e.g. Clinical Psychology">
+        </div>
+        <div class="form-group">
+          <label class="form-label">License Number *</label>
+          <input class="form-input" id="ap-license" placeholder="e.g. PSY-12345">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Qualification</label>
+        <input class="form-input" id="ap-qualification" placeholder="e.g. PhD in Clinical Psychology, Licensed Therapist">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Years of Experience</label>
+          <input class="form-input" id="ap-experience" type="number" placeholder="e.g. 10" min="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Consultation Fee (Rs.) *</label>
+          <input class="form-input" id="ap-fee" type="number" placeholder="e.g. 3000" min="0">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Clinic Location</label>
+          <input class="form-input" id="ap-location" placeholder="e.g. SoulSync Clinic, Lahore">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Available Days</label>
+          <input class="form-input" id="ap-days" placeholder="e.g. Mon,Tue,Wed,Thu,Fri">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Bio / Description</label>
+        <textarea class="form-textarea" id="ap-bio" placeholder="Brief professional bio..."></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-check">
+            <input type="checkbox" id="ap-available" checked>
+            <span>Mark as Available</span>
+          </label>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Initial Status</label>
+          <select class="form-select" id="ap-status">
+            <option value="NotChecked">Not Checked</option>
+            <option value="Verified">Verified</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('add-psych-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="addPsychologist()">💾 Add Psychologist</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- MODAL: ADD THERAPY ANIMAL                          -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="add-animal-modal" onclick="closeModalOutside(event,'add-animal-modal')">
+  <div class="modal modal-wide">
+    <div class="modal-header">
+      <div class="modal-title">Add New Therapy Animal</div>
+      <button class="modal-close" onclick="closeModal('add-animal-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-section-title">Basic Information</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Animal Name *</label>
+          <input class="form-input" id="aa-name" placeholder="e.g. Buddy">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Animal Type *</label>
+          <select class="form-select" id="aa-type" onchange="updateAnimalTypeLabel()">
+            <option value="Dog">🐕 Dog</option>
+            <option value="Cat">🐈 Cat</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Breed *</label>
+          <input class="form-input" id="aa-breed" placeholder="e.g. Golden Retriever">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Age (years)</label>
+          <input class="form-input" id="aa-age" type="number" placeholder="e.g. 3" min="0">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Birthday Date</label>
+          <input class="form-input" id="aa-birthday" type="date">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Temperament</label>
+          <input class="form-input" id="aa-temperament" placeholder="e.g. Calm, gentle, patient">
+        </div>
+      </div>
+      <div class="form-section-title">Therapy Information</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Specialization *</label>
+          <input class="form-input" id="aa-specialization" placeholder="e.g. Anxiety & Depression">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Experience (years)</label>
+          <input class="form-input" id="aa-experience" type="number" placeholder="e.g. 4" min="0">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Certification Level</label>
+          <select class="form-select" id="aa-cert">
+            <option>Level 1 - Basic</option>
+            <option>Level 2 - Certified</option>
+            <option>Level 3 - Advanced</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Health Status</label>
+          <select class="form-select" id="aa-health">
+            <option>Excellent</option><option>Good</option>
+            <option>Fair</option><option>Needs Attention</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Success Rate (%)</label>
+          <input class="form-input" id="aa-rate" type="number" placeholder="e.g. 94.5" min="0" max="100" step="0.1">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Trainer Name *</label>
+          <input class="form-input" id="aa-trainer" placeholder="Trainer's full name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Therapy Specialties (comma-separated)</label>
+        <input class="form-input" id="aa-specialties" placeholder="e.g. Anxiety Relief, Depression Support, PTSD">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description *</label>
+        <textarea class="form-textarea" id="aa-desc" placeholder="Brief description of the therapy animal..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-check">
+          <input type="checkbox" id="aa-active" checked>
+          <span>Mark as Active</span>
+        </label>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('add-animal-modal')">Cancel</button>
+      <button class="btn btn-primary" onclick="addAnimal()">💾 Add Animal</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- MODAL: VIEW ANIMAL                                 -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="view-animal-modal" onclick="closeModalOutside(event,'view-animal-modal')">
+  <div class="modal modal-wide">
+    <div class="modal-header">
+      <div class="modal-title" id="view-animal-title">Animal Details</div>
+      <button class="modal-close" onclick="closeModal('view-animal-modal')">✕</button>
+    </div>
+    <div class="modal-body" id="view-animal-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('view-animal-modal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- MODAL: CONFIRM / GENERIC                           -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="confirm-modal" onclick="closeModalOutside(event,'confirm-modal')">
+  <div class="modal" style="max-width:400px">
+    <div class="modal-header">
+      <div class="modal-title" id="confirm-modal-title">Confirm Action</div>
+      <button class="modal-close" onclick="closeModal('confirm-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p id="confirm-modal-msg" style="font-size:14px;color:var(--text-secondary);line-height:1.6;"></p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('confirm-modal')">Cancel</button>
+      <button class="btn btn-danger" id="confirm-modal-btn">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- MODAL: CANCEL REASON (patient request)             -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="cancel-reason-modal" onclick="closeModalOutside(event,'cancel-reason-modal')">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header">
+      <div class="modal-title">Cancel Appointment</div>
+      <button class="modal-close" onclick="closeModal('cancel-reason-modal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13.5px;color:var(--text-secondary);margin-bottom:14px;">
+        Provide a reason for cancellation. Note: appointments cannot be cancelled within 12 hours of scheduled time.
+      </p>
+      <div class="form-group">
+        <label class="form-label">Reason for Cancellation</label>
+        <textarea class="form-textarea" id="cancel-reason-input" placeholder="Enter reason..."></textarea>
+      </div>
+      <input type="hidden" id="cancel-appt-id">
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal('cancel-reason-modal')">Back</button>
+      <button class="btn btn-danger" onclick="executeCancelAppt()">✗ Cancel Appointment</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toast-container"></div>
+
+</body>
+</html>

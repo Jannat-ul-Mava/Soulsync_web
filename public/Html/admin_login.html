@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoulSync — Admin Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../Css/admin_login.css">
+   <script src="../Javascript/admin_login.js" defer></script>
+</head>
+<body>
+
+<div class="login-root">
+
+  <!-- LEFT: Welcome Section -->
+  <div class="welcome-section">
+    <div class="welcome-inner">
+
+      <!-- Logo -->
+      <div class="logo-circle">
+        <svg width="50" height="50" viewBox="0 0 60 60" fill="none">
+          <path d="M30 52C16 44 6 36 6 24C6 16 12 10 20 10C24.5 10 28.5 12.2 30 15.5C31.5 12.2 35.5 10 40 10C48 10 54 16 54 24C54 36 44 44 30 52Z" fill="white" opacity="0.95"/>
+          <path d="M22 28C22 28 26 32 30 32C34 32 38 28 38 28" stroke="#3A6351" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="24" cy="24" r="2.5" fill="#3A6351"/>
+          <circle cx="36" cy="24" r="2.5" fill="#3A6351"/>
+        </svg>
+      </div>
+
+      <!-- Welcome Text -->
+      <div class="welcome-text-group">
+        <p class="welcome-subtitle">Welcome to</p>
+        <h1 class="welcome-title">SoulSync</h1>
+        <p class="welcome-tagline">Admin Control Center</p>
+      </div>
+
+      <!-- Admin Badge -->
+      <div class="admin-badge">
+        <div class="admin-badge-dot"></div>
+        <span class="admin-badge-text">Restricted Access</span>
+      </div>
+
+      <!-- Info Cards -->
+      <div class="info-cards">
+        <div class="info-card">
+          <div class="info-card-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.90)" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="info-card-content">
+            <div class="info-card-title">User Management</div>
+            <div class="info-card-desc">Manage patients, psychologists & accounts</div>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.90)" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <div class="info-card-content">
+            <div class="info-card-title">Analytics & Reports</div>
+            <div class="info-card-desc">Platform insights and mental health trends</div>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.90)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+          </div>
+          <div class="info-card-content">
+            <div class="info-card-title">Content Control</div>
+            <div class="info-card-desc">Moderate spiritual content and resources</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RIGHT: Login Form -->
+  <div class="login-section">
+    <div class="login-scroll">
+      <div class="login-form-container">
+
+        <!-- Admin Tag -->
+        <div class="admin-tag">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Admin Portal
+        </div>
+
+        <!-- Header -->
+        <div class="form-header">
+          <h2 class="form-title">Admin Login</h2>
+          <p class="form-subtitle">Authorized personnel only</p>
+        </div>
+
+        <!-- Form -->
+        <form class="login-form" onsubmit="handleLogin(event)">
+
+          <!-- Email -->
+          <div class="field-group">
+            <label class="field-label" for="emailField">Admin Email</label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+              </span>
+              <input class="input-field" type="email" id="emailField" placeholder="Enter your admin email" autocomplete="email"/>
+            </div>
+            <span class="error-label" id="emailError">Please enter a valid email address.</span>
+          </div>
+
+          <!-- Password -->
+          <div class="field-group">
+            <div class="field-label-row">
+              <label class="field-label" for="passwordField">Password</label>
+              <a href="admin-forgot-password.html" class="forgot-link">Forgot Password?</a>
+            </div>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </span>
+              <input class="input-field input-field-with-icon" type="password" id="passwordField" placeholder="Enter your password" autocomplete="current-password"/>
+              <button type="button" class="eye-button" onclick="togglePassword()">
+                <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <span class="error-label" id="passwordError">Password is required.</span>
+          </div>
+
+          <!-- Remember Me -->
+          <div class="remember-row">
+            <label class="remember-label">
+              <input type="checkbox" class="remember-checkbox" id="rememberMeCheckbox"/>
+              <span class="checkbox-custom"></span>
+              Keep me signed in on this device
+            </label>
+          </div>
+
+          <!-- Login Button -->
+          <button type="submit" class="login-button" id="loginButton">
+            <span class="btn-text">Access Admin Dashboard</span>
+            <span id="btnLoader" style="display:none;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" class="spin"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+            </span>
+          </button>
+
+          <!-- Error Message Box -->
+          <div class="error-message-box" id="errorMessageBox" style="display:none;">
+            <span class="error-icon">⚠</span>
+            <span class="error-message-text" id="errorMessageLabel"></span>
+          </div>
+
+          <!-- Success Message -->
+          <div class="success-message-box" id="successBox" style="display:none;">
+            <span class="success-icon">✓</span>
+            <span class="success-message-text" id="successLabel"></span>
+          </div>
+
+        </form>
+
+        <!-- Security Notice -->
+        <div class="security-notice">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <p class="security-notice-text">
+            <strong>Secure Admin Area.</strong> This portal is restricted to authorized SoulSync administrators only. Unauthorized access attempts are logged and monitored.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

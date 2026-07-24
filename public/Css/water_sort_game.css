@@ -1,0 +1,322 @@
+
+:root {
+  --c1: #ff6b2b;
+  --c2: #2bd4c4;
+  --c3: #e63946;
+  --c4: #457b9d;
+  --c5: #9b5de5;
+  --c6: #2dc653;
+  --c7: #ffd166;
+  --c8: #ef476f;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  height: 100vh;
+  overflow: hidden;
+}
+.home-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: #1e3a5f;
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    padding: 10px 12px;
+    border-radius: 50%;
+}
+
+/* ── Screens ── */
+.screen { display: none; width: 100%; height: 100vh; }
+.screen.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+/* ── MENU ── */
+#screen-menu {
+  background: linear-gradient(135deg, #f8f4f1 0%, #b7b6b5 100%);
+}
+
+.menu-card {
+  background: linear-gradient(160deg, #ff8c42 0%, #ffd166 100%);
+  border-radius: clamp(16px, 4vw, 28px);
+  padding: clamp(28px, 5vw, 52px) clamp(28px, 6vw, 64px);
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  width: min(92vw, 400px);
+}
+
+.menu-title {
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(20px, 5vw, 35px);
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 6px;
+  letter-spacing: -1px;
+}
+
+.menu-sub {
+  font-size: clamp(12px, 2.5vw, 15px);
+  color: rgba(255,255,255,0.85);
+  margin-bottom: clamp(20px, 4vw, 32px);
+}
+
+.diff-btn {
+  display: block; width: 100%;
+  padding: clamp(12px, 2.5vw, 16px);
+  border-radius: 40px; border: none; cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(14px, 2.8vw, 18px); font-weight: 800;
+  color: #fff; margin-bottom: clamp(10px, 2vw, 14px);
+  transition: transform 0.15s, filter 0.15s;
+}
+.diff-btn:last-child { margin-bottom: 0; }
+.diff-btn:hover  { transform: scale(1.04); filter: brightness(1.08); }
+.diff-btn:active { transform: scale(0.97); }
+.diff-btn.easy   { background: #2dc653; }
+.diff-btn.medium { background: #f4a017; }
+.diff-btn.hard   { background: #e63946; }
+
+/* ── GAME ── */
+#screen-game {
+  background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80');
+  background-size: cover; background-position: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#screen-game::before {
+  content: ''; position: absolute; inset: 0;
+  background: rgba(24, 111, 112, 0.852);
+  backdrop-filter: blur(2px);
+}
+
+/* Floating top bar — only shuffle + exit */
+.game-bar {
+  position: absolute; top: 0; left: 0; right: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: clamp(10px, 2vw, 16px) clamp(14px, 3vw, 24px);
+  z-index: 10;
+}
+
+.bar-btn {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255,255,255,0.35);
+  border-radius: 40px;
+  color: #fff;
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(12px, 2vw, 14px); font-weight: 800;
+  padding: clamp(7px, 1.4vw, 10px) clamp(14px, 2.5vw, 20px);
+  cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: background 0.15s, transform 0.1s;
+  text-decoration: none; white-space: nowrap;
+}
+.bar-btn:hover  { background: rgba(255,255,255,0.28); transform: scale(1.04); }
+.bar-btn:active { transform: scale(0.97); }
+.bar-btn.shuffle { background: rgba(255,107,43,0.85); border-color: #ff6b2b; }
+.bar-btn.shuffle:hover { background: rgba(255,107,43,1); }
+.bar-btn.exit-btn { background: rgba(220,50,50,0.75); border-color: #e63946; }
+.bar-btn.exit-btn:hover { background: rgba(220,50,50,1); }
+
+/* ── Tubes stage ── */
+#tubes-stage {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(12px, 3vw, 28px);
+  justify-content: center;
+  align-items: flex-end;
+  padding: clamp(10px, 2vw, 20px);
+  max-width: 96vw;
+  /* leave room for top bar */
+  margin-top: clamp(54px, 9vw, 80px);
+}
+
+/* ── Glass Tube wrapper (handles tilt animation) ── */
+.tube-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  /* transform-origin bottom-center for realistic tilt */
+  transform-origin: bottom center;
+  transition: transform 0.2s cubic-bezier(0.4,0,0.2,1);
+  will-change: transform;
+}
+
+.tube-wrap.selected {
+  transform: translateY(-16px);
+}
+
+/* Tilt classes applied by JS */
+.tube-wrap.tilt-right {
+  animation: tiltRight 0.5s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+.tube-wrap.tilt-left {
+  animation: tiltLeft 0.5s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+
+@keyframes tiltRight {
+  0%   { transform: translateY(-16px) rotate(0deg); }
+  30%  { transform: translateY(-22px) rotate(38deg); }
+  65%  { transform: translateY(-18px) rotate(32deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes tiltLeft {
+  0%   { transform: translateY(-16px) rotate(0deg); }
+  30%  { transform: translateY(-22px) rotate(-38deg); }
+  65%  { transform: translateY(-18px) rotate(-32deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* ── Glass tube visual ── */
+.tube {
+  width: clamp(40px, 6.5vw, 64px);
+  height: clamp(150px, 24vw, 220px);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  /* Glass body */
+  background: linear-gradient(
+    105deg,
+    rgba(255,255,255,0.22) 0%,
+    rgba(255,255,255,0.06) 40%,
+    rgba(255,255,255,0.14) 100%
+  );
+  border-left:   2.5px solid rgba(255,255,255,0.55);
+  border-right:  2.5px solid rgba(255,255,255,0.25);
+  border-bottom: 3px solid rgba(255,255,255,0.5);
+  border-top: none;
+  /* Rounded bottom only */
+  border-radius: 0 0 clamp(18px, 3vw, 26px) clamp(18px, 3vw, 26px);
+  box-shadow:
+    inset 2px 0 8px rgba(255,255,255,0.15),
+    inset -2px 0 4px rgba(0,0,0,0.08),
+    0 8px 32px rgba(0,0,0,0.25);
+}
+
+/* Top rim of tube */
+.tube::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -4px; right: -4px;
+  height: clamp(10px, 1.8vw, 16px);
+  background: linear-gradient(
+    105deg,
+    rgba(255,255,255,0.55) 0%,
+    rgba(255,255,255,0.2) 50%,
+    rgba(255,255,255,0.4) 100%
+  );
+  border: 2px solid rgba(255,255,255,0.55);
+  border-radius: clamp(4px, 0.8vw, 7px) clamp(4px, 0.8vw, 7px) 0 0;
+  z-index: 10;
+}
+
+/* Glass shine streak */
+.tube::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 20%;
+  width: 18%;
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.28) 0%,
+    rgba(255,255,255,0.06) 60%,
+    transparent 100%
+  );
+  border-radius: 0 0 4px 4px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Complete glow */
+.tube-wrap.complete .tube {
+  box-shadow:
+    inset 2px 0 8px rgba(255,255,255,0.15),
+    0 0 0 2.5px #2dc653,
+    0 8px 32px rgba(45,198,83,0.45);
+}
+
+/* ── Water segments ── */
+.water-seg {
+  width: 100%;
+  position: relative;
+  transition: height 0.35s cubic-bezier(0.4,0,0.2,1);
+  z-index: 2;
+}
+
+/* Liquid shimmer on each segment */
+.water-seg::after {
+  content: '';
+  position: absolute;
+  top: 3px; left: 8%; right: 8%;
+  height: 4px;
+  background: rgba(255,255,255,0.35);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+/* Segment borders between colors */
+.water-seg + .water-seg {
+  border-top: 1.5px solid rgba(0,0,0,0.12);
+}
+
+/* ── WIN SCREEN ── */
+#screen-win {
+  background: #0d1b3e;
+  border: 6px solid #ffd166;
+  position: relative; overflow: hidden;
+}
+
+.win-title {
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(26px, 6vw, 42px); font-weight: 900;
+  color: #ffd166; margin-bottom: clamp(8px, 2vw, 14px);
+  text-align: center; position: relative; z-index: 1;
+}
+
+.win-sub {
+  font-size: clamp(13px, 2.5vw, 16px);
+  color: rgba(255,255,255,0.65);
+  margin-bottom: clamp(20px, 4vw, 36px);
+  text-align: center; position: relative; z-index: 1;
+}
+
+.win-btn {
+  display: block; width: min(88vw, 340px);
+  padding: clamp(12px, 2.5vw, 16px);
+  border-radius: 40px; border: none; cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-size: clamp(14px, 2.8vw, 18px); font-weight: 800;
+  color: #fff; margin-bottom: clamp(10px, 2vw, 14px);
+  transition: transform 0.15s, filter 0.15s;
+  position: relative; z-index: 1;
+}
+.win-btn:hover  { transform: scale(1.04); filter: brightness(1.1); }
+.win-btn:active { transform: scale(0.97); }
+.win-btn.replay  { background: #457b9d; }
+.win-btn.newgame { background: #2dc653; }
+.win-btn.exitwin { background: #e63946; }
+
+.confetti-piece {
+  position: absolute;
+  width: 8px; height: 12px; border-radius: 2px;
+  animation: cfFall 2.4s ease-in forwards;
+  pointer-events: none; z-index: 0;
+}
+@keyframes cfFall {
+  0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+}
+
+@media (max-width: 380px) {
+  .tube { width: 36px; height: 130px; }
+  #tubes-stage { gap: 8px; }
+}

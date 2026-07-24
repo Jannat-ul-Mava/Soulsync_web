@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SoulSync — Assessment Results</title>
+  <link rel="stylesheet" href="../Css/assessment.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="assess-header">
+    <div class="assess-header-inner">
+      <div class="assess-brand">
+        <div class="assess-logo">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </div>
+        <span class="assess-brand-name">SoulSync</span>
+      </div>
+      <h1 class="assess-title">ASSESSMENT RESULTS</h1>
+      <div style="width:120px"></div><!-- spacer for centering -->
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main class="assess-main">
+
+    <!-- Total Score Card -->
+    <div class="assess-card da" style="--i:0">
+      <h2 class="section-heading">Your Total Score</h2>
+
+      <div class="score-legend">
+        <span class="legend-item">
+          <span class="legend-dot" style="background:#5AB89A"></span>
+          0–38 (Mild)
+        </span>
+        <span class="legend-item">
+          <span class="legend-dot" style="background:#F59E0B"></span>
+          39–76 (Moderate)
+        </span>
+        <span class="legend-item">
+          <span class="legend-dot" style="background:#EF4444"></span>
+          77+ (Severe)
+        </span>
+      </div>
+
+      <div class="total-score-display">32 <span class="score-pct">(53.33%)</span></div>
+
+      <div class="gradient-bar-wrap">
+        <div class="gradient-bar">
+          <div class="gradient-bar-fill" data-pct="53.33" id="totalFill"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Score Breakdown Card -->
+    <div class="assess-card da" style="--i:1">
+      <h2 class="section-heading">Score Break-down</h2>
+
+      <div class="score-legend">
+        <span class="legend-item">
+          <span class="legend-dot" style="background:#5AB89A"></span>
+          0–12 (Mild)
+        </span>
+        <span class="legend-item">
+          <span class="legend-dot" style="background:#F59E0B"></span>
+          13–24 (Moderate)
+        </span>
+        <span class="legend-item">
+          <span class="legend-dot" style="background:#EF4444"></span>
+          25+ (Severe)
+        </span>
+      </div>
+
+      <!-- Breakdown Items -->
+      <div class="breakdown-list">
+
+        <div class="breakdown-item da" style="--i:2">
+          <div class="breakdown-label">Feelings of depression</div>
+          <div class="breakdown-score">10 <span class="score-pct-sm">(47.62%)</span></div>
+          <div class="gradient-bar-wrap">
+            <div class="gradient-bar">
+              <div class="gradient-bar-fill" data-pct="47.62"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="breakdown-item da" style="--i:3">
+          <div class="breakdown-label">Feelings of anxiety</div>
+          <div class="breakdown-score">9 <span class="score-pct-sm">(50.00%)</span></div>
+          <div class="gradient-bar-wrap">
+            <div class="gradient-bar">
+              <div class="gradient-bar-fill" data-pct="50"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="breakdown-item da" style="--i:4">
+          <div class="breakdown-label">Feelings of other mental issues</div>
+          <div class="breakdown-score">13 <span class="score-pct-sm">(61.90%)</span></div>
+          <div class="gradient-bar-wrap">
+            <div class="gradient-bar">
+              <div class="gradient-bar-fill" data-pct="61.90"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Recommendation Banner -->
+    <div class="recommend-banner da" style="--i:5">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;color:var(--mint-d)"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      <p>Based on your results, we recommend scheduling a consultation with a mental health professional.</p>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="assess-actions da" style="--i:6">
+      <button class="btn-primary" onclick="window.location.href='dashboard.html'">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Schedule Appointment
+      </button>
+      <button class="btn-outline" onclick="window.location.href='dashboard.html'">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Back to Dashboard
+      </button>
+    </div>
+
+  </main>
+  <script src="../JavaScript/Assessment.js"></script>
+</body>
+</html>

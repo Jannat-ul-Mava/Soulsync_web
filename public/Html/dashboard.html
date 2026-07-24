@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SoulSync — Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
+  <style>
+    /* ═══════════════════════════════════════════════════
+       SOULSYNC DASHBOARD  —  COMPLETE STYLING
+    ═══════════════════════════════════════════════════ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --mint:        #5AB89A;
+      --mint-lt:     #6EC6A8;
+      --mint-d:      #3A6351;
+      --deep:        #2D5244;
+      --pale:        #E1F7F2;
+      --pale-mid:    #EDF9F5;
+      --bg:          #F2F5F3;
+      --white:       #FFFFFF;
+      --border:      #DDE8E4;
+      --border-lt:   #EBF4F0;
+      --txt:         #192E26;
+      --txt-mid:     #364E46;
+      --txt-soft:    #668076;
+      --txt-light:   #94B0A8;
+      --sh-sm:       0 1px 4px rgba(45,82,68,.07);
+      --sh-md:       0 4px 20px rgba(45,82,68,.10);
+      --sh-lg:       0 10px 40px rgba(45,82,68,.14);
+      --sb-w:        260px;
+      --topbar-h:    64px;
+      --ease:        cubic-bezier(.4,0,.2,1);
+      --spring:      cubic-bezier(.34,1.56,.64,1);
+      --font-d:      'Playfair Display', Georgia, serif;
+      --font-b:      'DM Sans', system-ui, sans-serif;
+      --radius-sm:   8px;
+      --radius-md:   12px;
+      --radius-lg:   16px;
+      --radius-xl:   22px;
+    }
+
+    body {
+      font-family: var(--font-b);
+      background: var(--bg);
+      color: var(--txt);
+      min-height: 100vh;
+      overflow: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    button { font-family: var(--font-b); cursor: pointer; border: none; background: none; }
+    input { font-family: var(--font-b); outline: none; }
+
+    /* LAYOUT */
+    .layout {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ═══════════════════════════════════════
+       SIDEBAR
+    ═══════════════════════════════════════ */
+    .sidebar {
+      width: var(--sb-w);
+      min-width: var(--sb-w);
+      background: var(--white);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow-y: auto;
+      flex-shrink: 0;
+      transition: transform 0.32s var(--ease);
+      z-index: 100;
+    }
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: var(--bg); }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    /* Brand */
+    .sb-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid var(--border-lt);
+    }
+    .sb-logo-circle {
+      width: 44px; height: 44px;
+      border-radius: 14px;
+      background: linear-gradient(145deg, var(--mint), var(--deep));
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(90,184,154,.28);
+    }
+    .sb-name {
+      display: block;
+      font-family: var(--font-d);
+      font-size: 18px; font-weight: 700;
+      color: var(--deep);
+      line-height: 1.2;
+    }
+    .sb-tagline {
+      display: block;
+      font-size: 9px; font-weight: 600;
+      color: var(--txt-light);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* Navigation */
+    .sb-nav {
+      padding: 16px 12px;
+      display: flex; flex-direction: column; gap: 4px;
+      flex: 1;
+    }
+    .sb-nav-label {
+      font-size: 10px; font-weight: 700;
+      color: var(--txt-light);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 0 12px 8px;
+    }
+    .sb-link {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 14px; font-weight: 500;
+      color: var(--txt-soft);
+      transition: all .2s var(--ease);
+      position: relative;
+    }
+    .sb-link:hover { background: var(--pale-mid); color: var(--mint-d); transform: translateX(3px); }
+    .sb-link.active { background: var(--pale); color: var(--deep); font-weight: 600; }
+    .sb-link.active::before {
+      content: '';
+      position: absolute; left: 0; top: 20%; bottom: 20%;
+      width: 3px; border-radius: 0 4px 4px 0;
+      background: var(--mint);
+    }
+    .sb-link-icon {
+      width: 18px; height: 18px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--txt-light);
+    }
+    .sb-badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--mint); margin-left: auto;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.4} }
+
+    .sb-spacer { flex: 1; min-height: 12px; }
+
+    /* Sidebar Profile */
+    .sb-profile {
+      display: flex; align-items: center; gap: 12px;
+      padding: 16px 20px;
+      border-top: 1px solid var(--border-lt);
+      margin-top: auto;
+    }
+    .sb-user-avatar-wrap {
+      position: relative; cursor: pointer; flex-shrink: 0;
+    }
+    .sb-user-canvas {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      border: 2px solid rgba(90,184,154,.35);
+      display: block;
+      transition: filter .2s;
+      background: linear-gradient(135deg, var(--mint), var(--deep));
+    }
+    .sb-avatar-overlay {
+      position: absolute; inset: 0; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity .2s;
+      background: rgba(45,82,68,.55);
+    }
+    .sb-user-avatar-wrap:hover .sb-avatar-overlay { opacity: 1; }
+    .sb-user-info { flex: 1; min-width: 0; }
+    .sb-uname { display: block; font-size: 13px; font-weight: 700; color: var(--txt); }
+    .sb-urole { display: block; font-size: 11px; color: var(--txt-soft); margin-top: 2px; }
+    .sb-logout-btn {
+      color: var(--txt-light); padding: 6px; border-radius: 10px;
+      transition: all .2s;
+    }
+    .sb-logout-btn:hover { color: #e74c3c; background: #fef2f2; }
+
+    /* Bottom links */
+    .sb-bottom-links {
+      padding: 8px 12px 16px;
+      border-top: 1px solid var(--border-lt);
+    }
+    .sb-link-sm { padding: 8px 14px; font-size: 13px; }
+
+    /* ═══════════════════════════════════════
+       TOPBAR
+    ═══════════════════════════════════════ */
+    .main-wrap {
+      flex: 1; min-width: 0;
+      display: flex; flex-direction: column;
+      height: 100vh; overflow: hidden;
+    }
+    .topbar {
+      height: var(--topbar-h);
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center;
+      padding: 0 28px;
+      flex-shrink: 0;
+      gap: 20px;
+      box-shadow: var(--sh-sm);
+    }
+    .mob-menu-btn { display: none; color: var(--txt-soft); padding: 8px; border-radius: 10px; }
+    .topbar-search {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--bg); border: 1.5px solid var(--border);
+      border-radius: 40px; padding: 9px 18px;
+      width: 280px;
+      transition: all .2s;
+    }
+    .topbar-search svg { color: var(--txt-light); flex-shrink: 0; }
+    .topbar-search input {
+      border: none; background: none; font-size: 13px; color: var(--txt); width: 100%;
+    }
+    .topbar-search input::placeholder { color: var(--txt-light); }
+    .topbar-search:focus-within { border-color: var(--mint); box-shadow: 0 0 0 3px rgba(90,184,154,.12); background: var(--white); }
+
+    /* ═══════════════════════════════════════
+       CONTENT AREA
+    ═══════════════════════════════════════ */
+    .content-scroll {
+      flex: 1; overflow-y: auto; overflow-x: hidden;
+    }
+    .content-scroll::-webkit-scrollbar { width: 5px; }
+    .content-scroll::-webkit-scrollbar-track { background: var(--bg); }
+    .content-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 8px; }
+    .content-inner {
+      padding: 24px 32px 48px;
+      display: flex; flex-direction: column; gap: 24px;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    /* Animation */
+    .da {
+      opacity: 0;
+      animation: fadeUp .5s var(--spring) forwards;
+      animation-delay: calc(var(--i) * 0.08s);
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Section Title */
+    .section-title {
+      font-size: 14px; font-weight: 700;
+      color: var(--txt-soft);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 14px;
+    }
+
+    /* Welcome Row */
+    .row-welcome {
+      background: linear-gradient(135deg, var(--white), var(--pale-mid));
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      border: 1px solid var(--border);
+      box-shadow: var(--sh-sm);
+    }
+    .welcome-greeting { font-size: 12px; font-weight: 600; color: var(--txt-soft); letter-spacing: .05em; margin-bottom: 6px; }
+    .welcome-name { font-family: var(--font-d); font-size: 28px; font-weight: 700; color: var(--txt); }
+    .welcome-name em { color: var(--mint-d); font-style: normal; }
+    .welcome-date { font-size: 13px; color: var(--txt-soft); margin-top: 6px; }
+
+    /* Quick Actions Grid */
+    .quick-actions-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .qa-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px 12px;
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      font-size: 13px; font-weight: 600; color: var(--txt-mid);
+      transition: all .25s var(--spring);
+      cursor: pointer;
+    }
+    .qa-card:hover { transform: translateY(-4px); box-shadow: var(--sh-md); border-color: var(--mint); background: var(--pale-mid); }
+    .qa-card-icon {
+      width: 54px; height: 54px; border-radius: 18px;
+      background: var(--pale-mid);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--mint-d);
+      transition: all .2s;
+    }
+    .qa-card:hover .qa-card-icon { background: var(--pale); transform: scale(1.05); }
+
+    /* Mid Grid Layout */
+    .mid-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    /* Bottom Grid */
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    /* Base Card */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      transition: box-shadow .22s, transform .22s var(--spring);
+    }
+    .card:hover { box-shadow: var(--sh-md); transform: translateY(-2px); }
+    .card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .card-header-left { display: flex; align-items: center; gap: 12px; }
+    .card-icon-box {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .icon-mint { background: rgba(90,184,154,.12); color: var(--mint-d); }
+    .icon-deep { background: rgba(45,82,68,.1); color: var(--deep); }
+    .card-title { font-size: 15px; font-weight: 700; color: var(--txt); }
+    .card-sub { font-size: 11px; color: var(--txt-soft); margin-top: 2px; }
+    .card-link { font-size: 12px; font-weight: 600; color: var(--mint-d); transition: color .2s; }
+    .card-link:hover { color: var(--deep); }
+
+    /* Progress */
+    .progress-stack { display: flex; flex-direction: column; gap: 14px; }
+    .prog-row-top { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 12px; color: var(--txt-mid); }
+    .prog-label { font-weight: 500; }
+    .prog-value { font-weight: 700; color: var(--mint-d); }
+    .prog-track { height: 7px; border-radius: 10px; background: var(--bg); overflow: hidden; }
+    .prog-fill {
+      height: 100%; border-radius: 10px; background: var(--mint);
+      width: var(--pw);
+    }
+
+    /* Routines List */
+    .routine-list { display: flex; flex-direction: column; gap: 8px; }
+    .routine-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 8px 6px; border-radius: 10px; cursor: pointer;
+      transition: background .15s;
+    }
+    .routine-row:hover { background: var(--pale-mid); }
+    .rchk { display: none; }
+    .rcheck-box {
+      width: 20px; height: 20px; border-radius: 6px; flex-shrink: 0;
+      border: 2px solid var(--border); background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      transition: all .2s;
+    }
+    .rchk:checked + .rcheck-box { background: var(--mint); border-color: var(--mint); transform: scale(1.05); }
+    .rchk:checked + .rcheck-box svg { opacity: 1; }
+    .rcheck-box svg { opacity: 0; transition: opacity .15s; }
+    .rname { flex: 1; font-size: 13px; font-weight: 500; color: var(--txt-mid); }
+    .rtime { font-size: 11px; color: var(--txt-light); flex-shrink: 0; }
+
+    /* Doctor Card */
+    .doctor-visual {
+      display: flex; align-items: center; gap: 16px;
+      padding: 12px;
+      background: var(--pale-mid);
+      border-radius: var(--radius-md);
+      margin-bottom: 16px;
+    }
+    .doctor-avatar-large {
+      position: relative; flex-shrink: 0; width: 72px; height: 72px;
+    }
+    .doctor-avatar-large canvas {
+      width: 72px; height: 72px; border-radius: 50%;
+      border: 3px solid rgba(90,184,154,.3);
+      background: linear-gradient(145deg, #8B5E3C, #5A3E28);
+      display: block;
+    }
+    .doctor-status-ring {
+      position: absolute; inset: -5px; border-radius: 50%;
+      border: 2px solid rgba(90,184,154,.4);
+      animation: ringPulse 3s ease-in-out infinite;
+    }
+    @keyframes ringPulse { 0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.08);opacity:.2} }
+    .doctor-badge {
+      position: absolute; bottom: 0; right: 0;
+      width: 24px; height: 24px; border-radius: 50%;
+      background: var(--mint); border: 2px solid white;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .doctor-name { display: block; font-size: 15px; font-weight: 700; color: var(--txt); margin-bottom: 2px; }
+    .doctor-spec { display: block; font-size: 11px; color: var(--txt-soft); margin-bottom: 5px; }
+    .doctor-rating { display: flex; align-items: center; gap: 5px; }
+    .rating-stars { font-size: 11px; color: #F59E0B; letter-spacing: -1px; }
+    .rating-val { font-size: 12px; font-weight: 700; color: var(--txt); }
+    .rating-count { font-size: 10px; color: var(--txt-soft); }
+
+    .session-info-row {
+      display: flex; background: var(--bg); border-radius: 12px; overflow: hidden;
+      margin: 12px 0;
+    }
+    .session-info-item { flex: 1; padding: 10px; text-align: center; }
+    .sii-label { font-size: 10px; font-weight: 700; color: var(--txt-light); text-transform: uppercase; }
+    .sii-val { font-size: 14px; font-weight: 700; color: var(--txt-mid); }
+    .session-info-divider { width: 1px; background: var(--border); }
+
+    .schedule-btn {
+      width: 100%; padding: 11px;
+      background: linear-gradient(135deg, var(--mint), var(--mint-d));
+      color: white; border-radius: 40px;
+      font-size: 13px; font-weight: 600;
+      transition: all .2s var(--spring);
+      box-shadow: 0 2px 8px rgba(90,184,154,.25);
+    }
+    .schedule-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(90,184,154,.35); }
+
+    /* Recommendations */
+    .rec-list { display: flex; flex-direction: column; gap: 8px; }
+    .rec-row {
+      display: flex; align-items: center; gap: 14px;
+      padding: 12px 10px; border-radius: 12px;
+      transition: all .2s;
+    }
+    .rec-row:hover { background: var(--pale-mid); transform: translateX(4px); }
+    .rec-icon-box {
+      width: 44px; height: 44px; border-radius: 14px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .rec-ic-1 { background: rgba(90,184,154,.12); color: var(--mint-d); }
+    .rec-ic-2 { background: rgba(45,82,68,.1); color: var(--deep); }
+    .rec-ic-3 { background: rgba(246,173,85,.12); color: #C47B2E; }
+    .rec-text { flex: 1; }
+    .rec-title { display: block; font-size: 14px; font-weight: 600; color: var(--txt); margin-bottom: 2px; }
+    .rec-desc { display: block; font-size: 11px; color: var(--txt-soft); }
+    .rec-action {
+      background: var(--white); border: 1.5px solid var(--border);
+      border-radius: 30px; padding: 6px 16px;
+      font-size: 12px; font-weight: 600; color: var(--mint-d);
+      transition: all .2s;
+    }
+    .rec-action:hover { background: var(--mint); border-color: var(--mint); color: white; transform: scale(1.02); }
+
+    /* Toast */
+    .upload-toast {
+      position: fixed; bottom: 28px; right: 28px;
+      background: var(--deep); color: white;
+      padding: 12px 20px; border-radius: 50px;
+      font-size: 13px; font-weight: 500;
+      display: flex; align-items: center; gap: 10px;
+      box-shadow: var(--sh-lg);
+      transform: translateY(80px); opacity: 0;
+      transition: all .4s var(--spring);
+      pointer-events: none; z-index: 1000;
+    }
+    .upload-toast.show { transform: translateY(0); opacity: 1; }
+
+    /* Mobile Overlay */
+    .mob-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.3); z-index: 99; backdrop-filter: blur(2px); }
+    .mob-overlay.show { display: block; }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .bottom-grid { grid-template-columns: 1fr; gap: 20px; }
+      .quick-actions-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .sidebar { position: fixed; left: 0; top: 0; bottom: 0; transform: translateX(-100%); z-index: 200; box-shadow: var(--sh-lg); }
+      .sidebar.open { transform: translateX(0); }
+      .mob-menu-btn { display: flex; align-items: center; }
+      .topbar { padding: 0 16px; }
+      .topbar-search { width: 200px; }
+      .content-inner { padding: 16px; }
+      .welcome-name { font-size: 22px; }
+      .quick-actions-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    }
+    @media (max-width: 480px) {
+      .quick-actions-grid { grid-template-columns: 1fr; }
+      .doctor-visual { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-top">
+      <div class="sb-logo-circle">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </div>
+      <div>
+        <span class="sb-name">SoulSync</span>
+        <span class="sb-tagline">Mental Wellness</span>
+      </div>
+    </div>
+
+    <nav class="sb-nav">
+      <span class="sb-nav-label">Main Menu</span>
+      <a href="#" class="sb-link active">
+        <span class="sb-link-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></span>
+        Dashboard
+      </a>
+      <a href="#" class="sb-link">
+        <span class="sb-link-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>
+        Daily Routines
+      </a>
+      <a href="../Html/game_home_page.html" class="sb-link">
+        <span class="sb-link-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>
+        Relaxing Games
+      </a>
+      <a href="../Html/bot_2.html" class="sb-link">
+        <span class="sb-link-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+        Chat Support
+        <span class="sb-badge-dot"></span>
+      </a>
+    
+    </nav>
+
+    <div class="sb-spacer"></div>
+
+    <div class="sb-profile">
+      <label class="sb-user-avatar-wrap" for="profileUpload">
+        <canvas id="sbUserCanvas" class="sb-user-canvas" width="42" height="42"></canvas>
+        <div class="sb-avatar-overlay">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        </div>
+      </label>
+      <input type="file" id="profileUpload" accept="image/*" hidden/>
+      <div class="sb-user-info">
+        <span class="sb-uname">John Doe</span>
+        <span class="sb-urole">Patient</span>
+      </div>
+      <button class="sb-logout-btn" title="Logout">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </div>
+
+    <div class="sb-bottom-links">
+      <a href="#" class="sb-link sb-link-sm">
+        <span class="sb-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>
+        Logout
+      </a>
+    </div>
+  </aside>
+
+  <div class="mob-overlay" id="mobOverlay"></div>
+
+  <div class="main-wrap">
+    <header class="topbar">
+      <button class="mob-menu-btn" id="mobMenuBtn">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="topbar-search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="searchInput" placeholder="Search routines, activities..."/>
+      </div>
+    </header>
+
+    <div class="content-scroll">
+      <div class="content-inner">
+
+        <!-- Welcome Row -->
+        <div class="row-welcome da" style="--i:0">
+          <div>
+            <div class="welcome-greeting" id="greetingText">Good morning</div>
+            <div class="welcome-name">Welcome back, <em>John!</em></div>
+            <div class="welcome-date" id="dateLine">Tuesday, December 02, 2025</div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="da" style="--i:1">
+          <div class="section-title">Quick Actions</div>
+          <div class="quick-actions-grid">
+            <button class="qa-card">
+              <div class="qa-card-icon" href="../Html/bot_2.html"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+              <span>Chat Bot</span>
+            </button>
+          
+            <button class="qa-card">
+              <div class="qa-card-icon" href="../Html/game_home_page.html"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M12 12h.01M8 12h.01M16 12h.01"/></svg></div>
+              <span>Relax &amp; Play</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mid Grid -->
+        <div class="mid-grid da" style="--i:2">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-header-left">
+                <div class="card-icon-box icon-mint"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+                <div class="card-title">Daily Progress</div>
+              </div>
+            </div>
+            <div class="progress-stack">
+              <div>
+                <div class="prog-row-top"><span class="prog-label">Routines Completed</span><span class="prog-value">3/5</span></div>
+                <div class="prog-track"><div class="prog-fill" style="--pw:60%"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Grid: Routines + Psychologist -->
+        <div class="bottom-grid da" style="--i:3">
+          <!-- Today's Routines -->
+          <div class="card">
+            <div class="card-header">
+              <div class="card-header-left">
+                <div class="card-icon-box icon-mint"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+                <div><div class="card-title">Today's Routines</div><div class="card-sub" id="routineSub">3 of 4 completed</div></div>
+              </div>
+              <a href="#" class="card-link">View All</a>
+            </div>
+            <div class="routine-list">
+              <label class="routine-row">
+                <input type="checkbox" class="rchk" checked/>
+                <div class="rcheck-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="rname">Morning Meditation</span><span class="rtime">7:00 AM</span>
+              </label>
+              <label class="routine-row">
+                <input type="checkbox" class="rchk" checked/>
+                <div class="rcheck-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="rname">Breakfast</span><span class="rtime">8:30 AM</span>
+              </label>
+              <label class="routine-row">
+                <input type="checkbox" class="rchk"/>
+                <div class="rcheck-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="rname">Afternoon Walk</span><span class="rtime">3:00 PM</span>
+              </label>
+              <label class="routine-row">
+                <input type="checkbox" class="rchk"/>
+                <div class="rcheck-box"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                <span class="rname">Evening Journaling</span><span class="rtime">8:00 PM</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Your Psychologist -->
+          <div class="card card-doctor">
+            <div class="card-header">
+              <div class="card-header-left">
+                <div class="card-icon-box icon-deep"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+                <div class="card-title">Your Psychologist</div>
+              </div>
+            </div>
+            <div class="doctor-visual">
+              <div class="doctor-avatar-large">
+                <div class="doctor-status-ring"></div>
+                <canvas id="doctorAvatarCanvas" width="72" height="72"></canvas>
+                <div class="doctor-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+              </div>
+              <div>
+                <span class="doctor-name">Dr. Sarah Johnson</span>
+                <span class="doctor-spec">Clinical Psychologist</span>
+                <div class="doctor-rating"><span class="rating-stars">★★★★★</span><span class="rating-val">4.9</span><span class="rating-count">(128)</span></div>
+              </div>
+            </div>
+            <div class="session-info-row">
+              <div class="session-info-item"><div class="sii-label">Next Session</div><div class="sii-val">Wed, 3 PM</div></div>
+              <div class="session-info-divider"></div>
+              <div class="session-info-item"><div class="sii-label">Duration</div><div class="sii-val">50 min</div></div>
+            </div>
+            <button class="schedule-btn">Schedule Appointment</button>
+          </div>
+        </div>
+
+        <!-- Recommended For You -->
+        <div class="card da" style="--i:5">
+          <div class="card-header">
+            <div class="card-header-left">
+              <div class="card-icon-box icon-mint"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              <div class="card-title">Recommended For You</div>
+            </div>
+          </div>
+          <div class="rec-list">
+            <div class="rec-row"><div class="rec-icon-box rec-ic-1"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3z"/><path d="M3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg></div><div class="rec-text"><span class="rec-title">Guided Breathing Exercise</span><span class="rec-desc">5 min · Reduces stress &amp; anxiety</span></div><button class="rec-action">Start</button></div>
+            <div class="rec-row"><div class="rec-icon-box rec-ic-2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="rec-text"><span class="rec-title">Evening Mindfulness</span><span class="rec-desc">10 min · Sleep better tonight</span></div><button class="rec-action">Start</button></div>
+            <div class="rec-row"><div class="rec-icon-box rec-ic-3"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="rec-text"><span class="rec-title">Journaling Prompt</span><span class="rec-desc">What are you grateful for today?</span></div><button class="rec-action">Write</button></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="upload-toast" id="uploadToast">✓ Profile photo updated!</div>
+
+<script>
+  // Mobile menu + Toast + Avatar placeholder
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('mobOverlay');
+  const menuBtn = document.getElementById('mobMenuBtn');
+  menuBtn?.addEventListener('click', () => { sidebar.classList.add('open'); overlay.classList.add('show'); });
+  overlay?.addEventListener('click', () => { sidebar.classList.remove('open'); overlay.classList.remove('show'); });
+
+  // Draw placeholder avatars
+  const userCanvas = document.getElementById('sbUserCanvas');
+  if(userCanvas) {
+    const ctx = userCanvas.getContext('2d');
+    ctx.fillStyle = '#5AB89A';
+    ctx.fillRect(0,0,42,42);
+    ctx.fillStyle = 'white';
+    ctx.font = 'bold 16px "DM Sans"';
+    ctx.fillText('JD', 12, 28);
+  }
+  const docCanvas = document.getElementById('doctorAvatarCanvas');
+  if(docCanvas) {
+    const dctx = docCanvas.getContext('2d');
+    dctx.fillStyle = '#8B5E3C';
+    dctx.fillRect(0,0,72,72);
+    dctx.fillStyle = 'white';
+    dctx.font = 'bold 28px "DM Sans"';
+    dctx.fillText('👩‍⚕️', 20, 52);
+  }
+
+  // Profile upload toast
+  const fileInput = document.getElementById('profileUpload');
+  const toast = document.getElementById('uploadToast');
+  fileInput?.addEventListener('change', (e) => {
+    if(e.target.files.length) {
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+  });
+
+  // dynamic greeting
+  const hour = new Date().getHours();
+  const greetEl = document.getElementById('greetingText');
+  if(greetEl) {
+    if(hour<12) greetEl.innerText = 'Good morning';
+    else if(hour<18) greetEl.innerText = 'Good afternoon';
+    else greetEl.innerText = 'Good evening';
+  }
+  const dateEl = document.getElementById('dateLine');
+  if(dateEl) dateEl.innerText = new Date().toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+</script>
+</body>
+</html>

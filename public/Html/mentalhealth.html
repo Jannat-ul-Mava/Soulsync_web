@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoulSync — Mental Health Screening</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════════
+   SOULSYNC — MENTAL HEALTH TEST
+   Clean · Calm · Professional
+════════════════════════════════════════════ */
+:root {
+  --mint:       #5AB89A;
+  --mint-d:     #3A6351;
+  --mint-l:     #E1F7F2;
+  --pale:       #EDF9F5;
+  --deep:       #2D5244;
+  --bg:         #F4F7F5;
+  --white:      #FFFFFF;
+  --txt:        #1C2E26;
+  --muted:      #5A7A6E;
+  --light:      #93AEA5;
+  --border:     #D4E8E0;
+  --danger:     #DC2626;
+  --danger-l:   #FEE2E2;
+  --warn:       #D97706;
+  --warn-l:     #FEF3C7;
+  --shadow:     rgba(45,82,68,0.10);
+  --shadow-lg:  rgba(45,82,68,0.16);
+  --ease:       cubic-bezier(.4,0,.2,1);
+  --spring:     cubic-bezier(.34,1.56,.64,1);
+  --font-d: 'Cormorant Garamond', Georgia, serif;
+  --font-b: 'DM Sans', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-b);
+  background: var(--bg);
+  color: var(--txt);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 0 32px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 12px var(--shadow);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand-logo {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--mint), var(--deep));
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 10px rgba(90,184,154,0.35);
+}
+.brand-logo svg { width: 22px; height: 22px; }
+.brand-name {
+  font-family: var(--font-d);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--deep);
+}
+
+.test-info {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.q-counter {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+}
+.q-counter span {
+  font-weight: 700;
+  color: var(--mint-d);
+}
+.pct-badge {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--deep);
+  background: var(--mint-l);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* ── PROGRESS BAR ── */
+.progress-wrap {
+  background: var(--white);
+  padding: 0 32px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.progress-track {
+  height: 5px;
+  background: var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--mint), var(--mint-d));
+  border-radius: 10px;
+  transition: width 0.55s var(--ease);
+  width: 5%;
+}
+
+/* ── MAIN LAYOUT ── */
+.page-body {
+  min-height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 48px 24px 80px;
+}
+
+/* ── QUESTION CARD ── */
+.question-card {
+  width: 100%;
+  max-width: 720px;
+  background: var(--white);
+  border-radius: 24px;
+  box-shadow: 0 4px 24px var(--shadow), 0 1px 4px rgba(45,82,68,0.06);
+  overflow: hidden;
+  animation: cardIn 0.45s var(--spring) forwards;
+}
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(28px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.card-exit {
+  animation: cardOut 0.3s var(--ease) forwards !important;
+}
+@keyframes cardOut {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to   { opacity: 0; transform: translateY(-20px) scale(0.97); }
+}
+
+/* ── CARD HEADER ── */
+.card-header {
+  background: linear-gradient(135deg, var(--deep) 0%, var(--mint-d) 100%);
+  padding: 28px 36px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.card-header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='20' cy='20' r='8'/%3E%3C/g%3E%3C/svg%3E");
+}
+.q-number-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.65);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  position: relative;
+}
+.q-number-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--mint);
+  box-shadow: 0 0 8px var(--mint);
+  animation: dotGlow 2s ease-in-out infinite;
+}
+@keyframes dotGlow {
+  0%,100% { opacity: 1; } 50% { opacity: 0.4; }
+}
+.question-text {
+  font-family: var(--font-d);
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--white);
+  line-height: 1.45;
+  position: relative;
+}
+.card-header-sub {
+  font-size: 12px;
+  color: rgba(255,255,255,0.55);
+  margin-top: 10px;
+  position: relative;
+}
+
+/* ── OPTIONS AREA ── */
+.options-area {
+  padding: 28px 36px 32px;
+}
+
+/* ── OPTION TYPES ── */
+
+/* Type A: Radio card options (full-width clickable rows) */
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.option-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  cursor: pointer;
+  background: var(--white);
+  transition: border-color 0.22s var(--ease), background 0.22s, transform 0.22s var(--spring), box-shadow 0.22s;
+  position: relative;
+  overflow: hidden;
+}
+.option-item::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--pale), transparent);
+  opacity: 0;
+  transition: opacity 0.22s;
+}
+.option-item:hover {
+  border-color: var(--mint);
+  transform: translateX(4px);
+  box-shadow: 0 4px 16px rgba(90,184,154,0.14);
+}
+.option-item:hover::before { opacity: 1; }
+.option-item.selected {
+  border-color: var(--mint);
+  background: var(--pale);
+  box-shadow: 0 4px 20px rgba(90,184,154,0.20);
+}
+.option-item.selected::before { opacity: 1; }
+
+.opt-radio {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.2s, background 0.2s, transform 0.2s var(--spring);
+  position: relative; z-index: 1;
+}
+.option-item:hover .opt-radio { border-color: var(--mint); }
+.option-item.selected .opt-radio {
+  border-color: var(--mint);
+  background: var(--mint);
+  transform: scale(1.1);
+}
+.opt-radio-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: white;
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.2s, transform 0.2s var(--spring);
+}
+.option-item.selected .opt-radio-dot {
+  opacity: 1;
+  transform: scale(1);
+}
+.opt-label {
+  font-size: 14.5px;
+  font-weight: 400;
+  color: var(--txt);
+  position: relative; z-index: 1;
+  transition: color 0.2s;
+}
+.option-item.selected .opt-label {
+  font-weight: 600;
+  color: var(--mint-d);
+}
+.opt-letter {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--light);
+  background: var(--bg);
+  border-radius: 6px;
+  padding: 3px 8px;
+  position: relative; z-index: 1;
+  transition: color 0.2s, background 0.2s;
+}
+.option-item.selected .opt-letter {
+  color: var(--mint-d);
+  background: rgba(90,184,154,0.15);
+}
+
+/* Type B: Scale circles (5-point Likert) */
+.scale-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.scale-labels {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
+}
+.scale-label-txt {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.scale-circles {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.scale-circle {
+  flex: 1;
+  aspect-ratio: 1;
+  max-width: 72px;
+  border-radius: 50%;
+  border: 2.5px solid var(--border);
+  background: var(--white);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.22s var(--ease), background 0.22s, transform 0.25s var(--spring), box-shadow 0.22s;
+  position: relative;
+}
+.scale-circle::after {
+  content: attr(data-val);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--light);
+  transition: color 0.2s;
+}
+.scale-circle:hover {
+  border-color: var(--mint);
+  transform: scale(1.08) translateY(-3px);
+  box-shadow: 0 6px 20px rgba(90,184,154,0.20);
+}
+.scale-circle.sel-1, .scale-circle.sel-2 {
+  border-color: #0EA5E9;
+  background: #EFF9FF;
+  transform: scale(1.12) translateY(-4px);
+  box-shadow: 0 8px 24px rgba(14,165,233,0.25);
+}
+.scale-circle.sel-1::after, .scale-circle.sel-2::after { color: #0369A1; }
+.scale-circle.sel-3 {
+  border-color: var(--light);
+  background: var(--bg);
+  transform: scale(1.12) translateY(-4px);
+}
+.scale-circle.sel-3::after { color: var(--muted); }
+.scale-circle.sel-4, .scale-circle.sel-5 {
+  border-color: var(--mint);
+  background: var(--pale);
+  transform: scale(1.12) translateY(-4px);
+  box-shadow: 0 8px 24px rgba(90,184,154,0.25);
+}
+.scale-circle.sel-4::after, .scale-circle.sel-5::after { color: var(--mint-d); }
+
+/* ── ALERT BOXES ── */
+.alert-box {
+  margin-top: 20px;
+  border-radius: 12px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.alert-box.danger {
+  background: var(--danger-l);
+  border: 1.5px solid #FCA5A5;
+  color: #991B1B;
+}
+.alert-box.warn {
+  background: var(--warn-l);
+  border: 1.5px solid #FCD34D;
+  color: #92400E;
+}
+.alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.alert-title { font-weight: 700; margin-bottom: 2px; }
+
+/* ── FOOTER BUTTONS ── */
+.card-footer {
+  padding: 0 36px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.btn-back {
+  display: flex; align-items: center; gap: 7px;
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-family: var(--font-b);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.2s var(--spring);
+}
+.btn-back:hover {
+  border-color: var(--mint);
+  color: var(--mint-d);
+  background: var(--pale);
+  transform: translateX(-2px);
+}
+.btn-back:disabled {
+  opacity: 0.35; cursor: not-allowed; transform: none;
+}
+
+.btn-next {
+  display: flex; align-items: center; gap: 8px;
+  background: linear-gradient(135deg, var(--mint), var(--mint-d));
+  border: none;
+  border-radius: 12px;
+  padding: 13px 28px;
+  font-family: var(--font-b);
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(90,184,154,0.38);
+  transition: transform 0.25s var(--spring), box-shadow 0.25s, background 0.2s, opacity 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.btn-next::after {
+  content: '';
+  position: absolute; top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transform: skewX(-20deg);
+  animation: shimmer 3s ease-in-out infinite;
+}
+@keyframes shimmer { 0%,65%,100% { left:-100%; } 40% { left:130%; } }
+.btn-next:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(90,184,154,0.50);
+}
+.btn-next:not(:disabled):active { transform: scale(0.97); }
+.btn-next:disabled {
+  opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none;
+}
+.btn-next svg, .btn-back svg { flex-shrink: 0; }
+
+/* ── SKIP HINT ── */
+.skip-hint {
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--light);
+  margin-top: 14px;
+}
+.skip-link {
+  color: var(--mint);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 500;
+}
+
+/* ── SECTION DIVIDER ── */
+.section-divider {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.sdiv-pill {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: white;
+  background: var(--mint-d);
+  padding: 4px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.sdiv-line {
+  flex: 1; height: 1px;
+  background: linear-gradient(90deg, var(--border), transparent);
+}
+
+/* ── RESULT PAGE ── */
+.result-card {
+  width: 100%;
+  max-width: 720px;
+  background: var(--white);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px var(--shadow);
+  animation: cardIn 0.5s var(--spring) forwards;
+}
+.result-header {
+  background: linear-gradient(135deg, var(--deep), var(--mint-d));
+  padding: 40px 40px 36px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.result-header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='12'/%3E%3C/g%3E%3C/svg%3E");
+}
+.result-icon {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  border: 2px solid rgba(255,255,255,0.3);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  font-size: 32px;
+  backdrop-filter: blur(4px);
+  position: relative;
+  animation: resultIcon 0.6s var(--spring) 0.3s both;
+}
+@keyframes resultIcon {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+.result-header h2 {
+  font-family: var(--font-d);
+  font-size: 28px;
+  font-weight: 400;
+  color: white;
+  margin-bottom: 8px;
+  position: relative;
+}
+.result-header p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.70);
+  position: relative;
+}
+.result-body {
+  padding: 36px 40px 40px;
+}
+.score-ring-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 32px;
+}
+.score-ring {
+  width: 140px; height: 140px;
+  position: relative;
+  margin-bottom: 14px;
+}
+.score-ring svg {
+  transform: rotate(-90deg);
+  width: 100%; height: 100%;
+}
+.score-ring-num {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.score-big {
+  font-family: var(--font-d);
+  font-size: 38px;
+  font-weight: 600;
+  color: var(--deep);
+  line-height: 1;
+}
+.score-of {
+  font-size: 12px;
+  color: var(--light);
+}
+.score-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.result-bands {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.result-band {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  text-align: center;
+  transition: transform 0.2s var(--spring);
+}
+.result-band:hover { transform: translateY(-2px); }
+.rb-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+.rb-value {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--txt);
+}
+.result-note {
+  background: var(--pale);
+  border: 1.5px solid rgba(90,184,154,0.30);
+  border-radius: 14px;
+  padding: 18px 20px;
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.65;
+  margin-bottom: 24px;
+}
+.result-actions {
+  display: flex;
+  gap: 12px;
+}
+.btn-primary {
+  flex: 1; padding: 14px;
+  background: linear-gradient(135deg, var(--mint), var(--mint-d));
+  color: white; border: none;
+  border-radius: 12px; font-family: var(--font-b);
+  font-size: 14px; font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(90,184,154,0.35);
+  transition: transform 0.2s var(--spring), box-shadow 0.2s;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(90,184,154,0.45);
+}
+.btn-outline {
+  flex: 1; padding: 14px;
+  background: white;
+  color: var(--mint-d);
+  border: 1.5px solid var(--border);
+  border-radius: 12px; font-family: var(--font-b);
+  font-size: 14px; font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.2s var(--spring);
+}
+.btn-outline:hover {
+  border-color: var(--mint);
+  background: var(--pale);
+  transform: translateY(-2px);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .topbar { padding: 0 16px; }
+  .progress-wrap { padding: 0 16px 12px; }
+  .page-body { padding: 24px 12px 60px; }
+  .card-header, .options-area, .card-footer { padding-left: 22px; padding-right: 22px; }
+  .question-text { font-size: 20px; }
+  .scale-circle { max-width: 52px; }
+  .result-body { padding: 24px 22px 28px; }
+  .result-bands { grid-template-columns: 1fr 1fr; }
+  .result-actions { flex-direction: column; }
+  .test-info { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 60 60" fill="none">
+        <path d="M30 52C16 44 6 36 6 24C6 16 12 10 20 10C24.5 10 28.5 12.2 30 15.5C31.5 12.2 35.5 10 40 10C48 10 54 16 54 24C54 36 44 44 30 52Z" fill="white"/>
+        <path d="M22 29C22 29 26 33 30 33C34 33 38 29 38 29" stroke="#3A6351" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="24" cy="24" r="2.5" fill="#3A6351"/>
+        <circle cx="36" cy="24" r="2.5" fill="#3A6351"/>
+      </svg>
+    </div>
+    <span class="brand-name">SoulSync</span>
+  </div>
+  <div class="test-info">
+    <span class="q-counter">Question <span id="qCounterCurrent">1</span> of <span id="qCounterTotal">20</span></span>
+    <span class="pct-badge" id="pctBadge">5%</span>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+</div>
+
+<!-- PAGE BODY -->
+<div class="page-body" id="pageBody">
+  <!-- Question card injected by JS -->
+</div>
+
+<script>
+// ════════════════════════════════════════════
+//  QUESTION DATA
+// ════════════════════════════════════════════
+const QUESTIONS = [
+  // Section A — Mood & Emotions (radio options)
+  {
+    id: 1, section: "Mood & Emotions", type: "radio",
+    text: "Over the past two weeks, how often have you felt down, depressed, or hopeless?",
+    options: ["Not at all", "Several days", "More than half the days", "Nearly every day"],
+    alert: null
+  },
+  {
+    id: 2, section: "Mood & Emotions", type: "radio",
+    text: "How often have you had little interest or pleasure in doing things you usually enjoy?",
+    options: ["Not at all", "Several days", "More than half the days", "Nearly every day"],
+    alert: null
+  },
+  {
+    id: 3, section: "Mood & Emotions", type: "scale",
+    text: "I feel emotionally balanced and stable in my day-to-day life.",
+    leftLabel: "Strongly Disagree", rightLabel: "Strongly Agree",
+    alert: null
+  },a,
+
+  // Section B — Anxiety & Stress (radio)
+  {
+    id: 4, section: "Anxiety & Stress", type: "radio",
+    text: "Over the past two weeks, how often have you felt nervous, anxious, or on edge?",
+    options: ["Not at all", "Several days", "More than half the days", "Nearly every day"],
+    alert: null
+  },
+  {
+    id: 5, section: "Anxiety & Stress", type: "radio",
+    text: "How often have you been unable to stop or control worrying?",
+    options: ["Not at all", "Several days", "More than half the days", "Nearly every day"],
+    alert: null
+  },
+  {
+    id: 6, section: "Anxiety & Stress", type: "scale",
+    text: "I find it easy to relax and let go of stress after a difficult day.",
+    leftLabel: "Strongly Disagree", rightLabel: "Strongly Agree",
+    alert: null
+  },
+
+  // Section C — Sleep & Energy
+  {
+    id: 7, section: "Sleep & Energy", type: "radio",
+    text: "Over the past month, how would you rate the quality of your sleep?",
+    options: ["Very good — I sleep well most nights", "Fairly good — some difficulties occasionally", "Fairly bad — frequently poor sleep", "Very bad — sleep is a serious problem"],
+    alert: null
+  },
+  {
+    id: 8, section: "Sleep & Energy", type: "radio",
+    text: "How often do you feel tired or have low energy during the day?",
+    options: ["Rarely or never", "A few times a week", "Most days", "Every single day"],
+    alert: null
+  },
+  {
+    id: 9, section: "Sleep & Energy", type: "scale",
+    text: "I wake up feeling rested and ready for the day.",
+    leftLabel: "Strongly Disagree", rightLabel: "Strongly Agree",
+    alert: null
+  },
+
+  // Section D — Social & Relationships
+  {
+    id: 10, section: "Social & Relationships", type: "scale",
+    text: "I feel supported by the people around me — family, friends, or colleagues.",
+    leftLabel: "Strongly Disagree", rightLabel: "Strongly Agree",
+    alert: null
+  },
+  {
+    id: 11, section: "Social & Relationships", type: "radio",
+    text: "How often do you feel lonely or isolated, even when you are around others?",
+    options: ["Never or rarely", "Sometimes", "Often", "Almost always"],
+    alert: null
+  },
+  {
+    id: 12, section: "Social & Relationships", type: "scale",
+    text: "I am comfortable expressing my emotions and feelings to someone I trust.",
+    leftLabel: "Strongly Disagree", rightLabel: "Strongly Agree",
+    alert: null
+  },
+
+  // Section E — Thoughts & Self-Perception
+  {
+    id: 13, section: "Thoughts & Self-Perception", type: "scale",
+    text: "I feel confident in my ability to handle challenges that come my way.",
+    leftLabel: "Strongly Disagree", rightLabel: "Strongly Agree",
+    alert: null
+  },
+  {
+    id: 14, section: "Thoughts & Self-Perception", type: "radio",
+    text: "How often do you have thoughts that are difficult to control or that feel overwhelming?",
+    options: ["Never", "Occasionally", "Frequently", "Almost constantly"],
+    alert: null
+  },
+  {
+    id: 15, section: "Thoughts & Self-Perception", type: "scale",
+    text: "I feel good about who I am as a person and my place in the world.",
+    leftLabel: "Strongly Disagree", rightLabel: "Strongly Agree",
+    alert: null
+  },
+
+  // Section F — Daily Functioning
+  {
+    id: 16, section: "Daily Functioning", type: "radio",
+    text: "How often do mental health concerns interfere with your ability to work, study, or complete daily tasks?",
+    options: ["Never — I function well", "Occasionally — minor impact", "Often — noticeable impact", "Very often — serious difficulty"],
+    alert: null
+  },
+  {
+    id: 17, section: "Daily Functioning", type: "scale",
+    text: "I am able to maintain a healthy routine including meals, hygiene, and exercise.",
+    leftLabel: "Strongly Disagree", rightLabel: "Strongly Agree",
+    alert: null
+  },
+  {
+    id: 18, section: "Daily Functioning", type: "radio",
+    text: "Over the past month, how often have you found it hard to concentrate on tasks?",
+    options: ["Not at all", "Several days", "More than half the days", "Nearly every day"],
+    alert: null
+  },
+
+  // Section G — Critical Questions
+  {
+    id: 19, section: "Wellbeing Check", type: "radio",
+    text: "Have you recently felt that things are hopeless and there is no way forward?",
+    options: ["No, I feel hopeful about the future", "Rarely — occasional low moments", "Sometimes — I struggle to see hope", "Yes, often — it feels overwhelming"],
+    alert: { type: "warn", title: "We care about you", body: "If you are going through a very difficult time, please reach out to someone you trust or contact a mental health helpline. You don't have to face this alone." }
+  },
+  {
+    id: 20, section: "Wellbeing Check", type: "radio",
+    text: "Have you had any thoughts of harming yourself or that you would be better off not being here?",
+    options: ["No, never", "These thoughts have crossed my mind briefly", "Sometimes I think about this", "Yes, these are frequent thoughts"],
+    alert: { type: "danger", title: "Important — Please Read", body: "If you are experiencing thoughts of self-harm or suicide, please seek immediate help by calling emergency services or a crisis helpline. You matter, and support is available right now." }
+  }
+];
+
+// ════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════
+let current = 0;
+let answers = new Array(QUESTIONS.length).fill(null);
+let transitioning = false;
+
+// ════════════════════════════════════════════
+//  RENDER
+// ════════════════════════════════════════════
+function render() {
+  if (current >= QUESTIONS.length) {
+    showResult();
+    return;
+  }
+
+  const q = QUESTIONS[current];
+  const pct = Math.round(((current + 1) / QUESTIONS.length) * 100);
+
+  // Update top bar
+  document.getElementById('qCounterCurrent').textContent = current + 1;
+  document.getElementById('pctBadge').textContent = pct + '%';
+  document.getElementById('progressFill').style.width = pct + '%';
+
+  // Check if section changed
+  const prevSection = current > 0 ? QUESTIONS[current - 1].section : null;
+  const showDivider = q.section !== prevSection;
+
+  const body = document.getElementById('pageBody');
+
+  let html = '';
+
+  // Section divider
+  if (showDivider) {
+    html += `
+      <div class="section-divider">
+        <span class="sdiv-pill">${q.section}</span>
+        <span class="sdiv-line"></span>
+      </div>`;
+  }
+
+  // Card
+  html += `<div class="question-card" id="qCard">
+    <div class="card-header">
+      <div class="q-number-badge">Question ${q.id} of ${QUESTIONS.length}</div>
+      <div class="question-text">${q.text}</div>
+      <div class="card-header-sub">Select the answer that best describes your experience</div>
+    </div>
+    <div class="options-area">`;
+
+  if (q.type === 'radio') {
+    html += `<div class="options-list">`;
+    const letters = ['A','B','C','D'];
+    q.options.forEach((opt, i) => {
+      const sel = answers[current] === i ? 'selected' : '';
+      html += `
+        <div class="option-item ${sel}" onclick="selectOption(${i})" role="radio" aria-checked="${sel === 'selected'}">
+          <div class="opt-radio"><div class="opt-radio-dot"></div></div>
+          <span class="opt-label">${opt}</span>
+          <span class="opt-letter">${letters[i]}</span>
+        </div>`;
+    });
+    html += `</div>`;
+  } else {
+    // Scale
+    html += `<div class="scale-wrap">
+      <div class="scale-labels">
+        <span class="scale-label-txt">${q.leftLabel}</span>
+        <span class="scale-label-txt">${q.rightLabel}</span>
+      </div>
+      <div class="scale-circles">`;
+    for (let v = 1; v <= 5; v++) {
+      const selClass = answers[current] === v ? `sel-${v}` : '';
+      html += `<div class="scale-circle ${selClass}" data-val="${v}" onclick="selectScale(${v})"></div>`;
+    }
+    html += `</div></div>`;
+  }
+
+  // Alert box
+  if (q.alert) {
+    html += `
+      <div class="alert-box ${q.alert.type}">
+        <span class="alert-icon">${q.alert.type === 'danger' ? '⚠️' : '💛'}</span>
+        <div><div class="alert-title">${q.alert.title}</div>${q.alert.body}</div>
+      </div>`;
+  }
+
+  html += `</div>`;
+
+  // Footer
+  const hasAnswer = answers[current] !== null;
+  const isLast = current === QUESTIONS.length - 1;
+  html += `
+    <div class="card-footer">
+      <button class="btn-back" id="btnBack" onclick="goBack()" ${current === 0 ? 'disabled' : ''}>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Back
+      </button>
+      <button class="btn-next" id="btnNext" onclick="goNext()" ${!hasAnswer ? 'disabled' : ''}>
+        ${isLast ? 'See Results' : 'Next Question'}
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
+    </div>
+  </div>`;
+
+  html += `<p class="skip-hint">All responses are <b>confidential</b> · <span class="skip-link" onclick="skipQuestion()">Skip this question</span></p>`;
+
+  body.innerHTML = html;
+
+  // Scroll to top smoothly
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function selectOption(idx) {
+  answers[current] = idx;
+  // Update UI without full re-render
+  document.querySelectorAll('.option-item').forEach((el, i) => {
+    el.classList.toggle('selected', i === idx);
+    el.setAttribute('aria-checked', i === idx);
+  });
+  document.getElementById('btnNext').disabled = false;
+
+  // Auto-advance after short delay if last option selected
+  // (optional — feels nice)
+}
+
+function selectScale(val) {
+  answers[current] = val;
+  document.querySelectorAll('.scale-circle').forEach(el => {
+    const v = parseInt(el.dataset.val);
+    el.className = 'scale-circle' + (v === val ? ` sel-${val}` : '');
+  });
+  document.getElementById('btnNext').disabled = false;
+}
+
+function skipQuestion() {
+  answers[current] = -1; // skipped
+  goNext();
+}
+
+function goNext() {
+  if (transitioning) return;
+  transitioning = true;
+  const card = document.getElementById('qCard');
+  if (card) {
+    card.classList.add('card-exit');
+    setTimeout(() => {
+      current++;
+      render();
+      transitioning = false;
+    }, 280);
+  } else {
+    current++;
+    render();
+    transitioning = false;
+  }
+}
+
+function goBack() {
+  if (transitioning || current === 0) return;
+  transitioning = true;
+  const card = document.getElementById('qCard');
+  if (card) {
+    card.classList.add('card-exit');
+    setTimeout(() => {
+      current--;
+      render();
+      transitioning = false;
+    }, 280);
+  } else {
+    current--;
+    render();
+    transitioning = false;
+  }
+}
+
+// ════════════════════════════════════════════
+//  RESULTS
+// ════════════════════════════════════════════
+function showResult() {
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('pctBadge').textContent = '100%';
+  document.getElementById('qCounterCurrent').textContent = '20';
+
+  // Calculate score
+  let answered = 0;
+  let totalScore = 0;
+  const maxScore = QUESTIONS.length * 4;
+
+  answers.forEach((a, i) => {
+    if (a !== null && a !== -1) {
+      answered++;
+      const q = QUESTIONS[i];
+      if (q.type === 'radio') {
+        totalScore += a; // 0-3
+      } else {
+        totalScore += (a - 1); // scale 1-5 → 0-4
+      }
+    }
+  });
+
+  const pct = Math.round((totalScore / (answered * 3.5)) * 100);
+  const wellScore = Math.max(0, Math.min(100, 100 - pct));
+
+  let level, emoji, note, levelColor;
+  if (wellScore >= 75) {
+    level = "Good Wellbeing"; emoji = "🌿";
+    note = "Your responses suggest you are managing your mental health well. Continue your positive habits and reach out for support if you ever need it.";
+    levelColor = "#3A6351";
+  } else if (wellScore >= 50) {
+    level = "Mild Concerns"; emoji = "🌤️";
+    note = "Your responses suggest some areas of your mental health may need attention. Consider speaking with a counsellor or practising self-care strategies.";
+    levelColor = "#D97706";
+  } else if (wellScore >= 25) {
+    level = "Moderate Concern"; emoji = "☁️";
+    note = "Your responses suggest you may be experiencing moderate mental health difficulties. We strongly recommend speaking with a mental health professional.";
+    levelColor = "#EA580C";
+  } else {
+    level = "Needs Attention"; emoji = "💙";
+    note = "Your responses suggest significant distress. Please speak with a qualified mental health professional or contact a crisis helpline as soon as possible.";
+    levelColor = "#DC2626";
+  }
+
+  const circumference = 2 * Math.PI * 54;
+  const strokeDash = circumference - (wellScore / 100) * circumference;
+
+  const body = document.getElementById('pageBody');
+  body.innerHTML = `
+    <div class="result-card">
+      <div class="result-header">
+        <div class="result-icon">${emoji}</div>
+        <h2>Assessment Complete</h2>
+        <p>Thank you for completing the SoulSync Mental Health Screening</p>
+      </div>
+      <div class="result-body">
+        <div class="score-ring-wrap">
+          <div class="score-ring">
+            <svg viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="54" fill="none" stroke="#E4EDE9" stroke-width="9"/>
+              <circle cx="60" cy="60" r="54" fill="none" stroke="${levelColor}" stroke-width="9"
+                stroke-dasharray="${circumference}" stroke-dashoffset="${circumference}"
+                stroke-linecap="round" id="scoreArc"
+                style="transition: stroke-dashoffset 1.5s cubic-bezier(.4,0,.2,1)"/>
+            </svg>
+            <div class="score-ring-num">
+              <span class="score-big" id="scoreNum">0</span>
+              <span class="score-of">/ 100</span>
+            </div>
+          </div>
+          <span class="score-label" style="color:${levelColor}">${level}</span>
+        </div>
+
+        <div class="result-bands">
+          <div class="result-band">
+            <div class="rb-label">Questions Answered</div>
+            <div class="rb-value">${answered} / ${QUESTIONS.length}</div>
+          </div>
+          <div class="result-band">
+            <div class="rb-label">Wellbeing Score</div>
+            <div class="rb-value" style="color:${levelColor}">${wellScore}%</div>
+          </div>
+          <div class="result-band">
+            <div class="rb-label">Assessment Type</div>
+            <div class="rb-value">General Screening</div>
+          </div>
+          <div class="result-band">
+            <div class="rb-label">Completed</div>
+            <div class="rb-value">${new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</div>
+          </div>
+        </div>
+
+        <div class="result-note">
+          <strong>📋 About this result:</strong><br>${note}
+          <br><br><em style="font-size:12px;color:#93AEA5">This screening is not a clinical diagnosis. Please consult a qualified mental health professional for a full evaluation.</em>
+        </div>
+
+        <div class="result-actions">
+          <button class="btn-primary" onclick="bookSession()">📅 Book a Session</button>
+          <button class="btn-outline" onclick="retake()">🔄 Retake Test</button>
+        </div>
+      </div>
+    </div>`;
+
+  // Animate score
+  setTimeout(() => {
+    document.getElementById('scoreArc').style.strokeDashoffset = strokeDash;
+    let n = 0;
+    const target = wellScore;
+    const step = target / 60;
+    const el = document.getElementById('scoreNum');
+    const interval = setInterval(() => {
+      n = Math.min(n + step, target);
+      el.textContent = Math.round(n);
+      if (n >= target) clearInterval(interval);
+    }, 25);
+  }, 100);
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function retake() {
+  current = 0;
+  answers = new Array(QUESTIONS.length).fill(null);
+  render();
+}
+
+function bookSession() {
+  alert('Redirecting to appointment booking... (Connect this to your appointments page)');
+}
+
+// ════════════════════════════════════════════
+//  KEYBOARD SHORTCUTS
+// ════════════════════════════════════════════
+document.addEventListener('keydown', (e) => {
+  const q = QUESTIONS[current];
+  if (!q) return;
+  if (['1','2','3','4','5'].includes(e.key)) {
+    const n = parseInt(e.key) - 1;
+    if (q.type === 'radio' && n < q.options.length) selectOption(n);
+    if (q.type === 'scale') selectScale(parseInt(e.key));
+  }
+  if (e.key === 'ArrowRight' || e.key === 'Enter') {
+    if (answers[current] !== null) goNext();
+  }
+  if (e.key === 'ArrowLeft') goBack();
+});
+
+// ════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SoulSync — Create Account</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../Css/signup-styles.css">
+</head>
+<body>
+
+<!-- Ambient orbs -->
+<div class="ambient" aria-hidden="true">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<div class="page-root">
+
+  <!-- ===== LEFT PANEL ===== -->
+  <aside class="panel-left">
+    <div class="float-shapes" aria-hidden="true">
+      <div class="fshape fs1"></div>
+      <div class="fshape fs2"></div>
+      <div class="fshape fs3"></div>
+      <div class="fshape fs4"></div>
+    </div>
+    <div class="float-icons" aria-hidden="true">
+      <span class="ficon fi1">🌿</span>
+      <span class="ficon fi2">💚</span>
+      <span class="ficon fi3">🌸</span>
+      <span class="ficon fi4">✨</span>
+      <span class="ficon fi5">🫧</span>
+    </div>
+
+    <div class="left-inner">
+      <div class="logo-wrap anim-1">
+        <div class="logo-ring">
+          <div class="logo-circle">
+            <svg width="46" height="46" viewBox="0 0 60 60" fill="none">
+              <path d="M30 52C16 44 6 36 6 24C6 16 12 10 20 10C24.5 10 28.5 12.2 30 15.5C31.5 12.2 35.5 10 40 10C48 10 54 16 54 24C54 36 44 44 30 52Z" fill="white"/>
+              <path d="M22 29C22 29 26 33 30 33C34 33 38 29 38 29" stroke="#3A6351" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="24" cy="24" r="2.5" fill="#3A6351"/>
+              <circle cx="36" cy="24" r="2.5" fill="#3A6351"/>
+            </svg>
+          </div>
+          <div class="ring-pulse"></div>
+        </div>
+      </div>
+
+      <div class="brand-block anim-2">
+        <p class="brand-pre">Join</p>
+        <h1 class="brand-name">SoulSync</h1>
+        <p class="brand-tag">Your Mental Wellness Companion</p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="fcard anim-3"><span class="fcard-emoji">🧘</span><span>Track mood & mental health</span></div>
+        <div class="fcard anim-4"><span class="fcard-emoji">🩺</span><span>Connect with psychologists</span></div>
+        <div class="fcard anim-5"><span class="fcard-emoji">🎵</span><span>Spiritual content & relaxation</span></div>
+        <div class="fcard anim-6"><span class="fcard-emoji">🗓️</span><span>Personalized daily routines</span></div>
+      </div>
+
+      <div class="trust-badges anim-7">
+        <div class="badge">🔒 HIPAA Compliant</div>
+        <div class="badge">🌍 Available in Pakistan</div>
+        <div class="badge">⭐ 4.9/5 Rating</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ===== RIGHT PANEL ===== -->
+  <main class="panel-right">
+    <div class="form-card anim-card">
+
+      <div class="card-top-bar" aria-hidden="true"></div>
+
+      <!-- Header -->
+      <div class="form-head">
+        <div class="head-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+        </div>
+        <div>
+          <h2 class="form-title">Create Your Account</h2>
+          <p class="form-subtitle">Join SoulSync and start your wellness journey</p>
+        </div>
+      </div>
+
+      <div class="scroll-body">
+      <form id="signupForm" onsubmit="handleSignUp(event)" novalidate>
+
+        <!-- Full Name -->
+        <div class="field-grp" id="grpName">
+          <label class="flabel" for="fullNameField">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Full Name <span class="req">*</span>
+          </label>
+          <div class="ishell">
+            <input class="ifield" type="text" id="fullNameField" placeholder="Enter your full name" autocomplete="name" oninput="clearErr('grpName')"/>
+            <span class="iglow" aria-hidden="true"></span>
+          </div>
+          <span class="ferr" id="errName">Full name is required.</span>
+        </div>
+
+        <!-- Email -->
+        <div class="field-grp" id="grpEmail">
+          <label class="flabel" for="emailField">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+            Email Address <span class="req">*</span>
+          </label>
+          <div class="ishell">
+            <input class="ifield" type="email" id="emailField" placeholder="you@example.com" autocomplete="email" oninput="clearErr('grpEmail')"/>
+            <span class="iglow" aria-hidden="true"></span>
+          </div>
+          <span class="ferr" id="errEmail">Please enter a valid email address.</span>
+        </div>
+
+        <!-- Password row -->
+        <div class="two-col">
+          <div class="field-grp" id="grpPass">
+            <label class="flabel" for="passwordField">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Password <span class="req">*</span>
+            </label>
+            <div class="ishell">
+              <input class="ifield ifield-pad" type="password" id="passwordField" placeholder="Min. 8 characters" autocomplete="new-password"
+                oninput="checkStrength(this.value); clearErr('grpPass')"/>
+              <button type="button" class="eye-btn" onclick="togglePass('passwordField',this)" aria-label="Toggle">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+              <span class="iglow" aria-hidden="true"></span>
+            </div>
+            <div class="str-bar" id="strBar">
+              <div class="str-seg" id="ss1"></div>
+              <div class="str-seg" id="ss2"></div>
+              <div class="str-seg" id="ss3"></div>
+              <div class="str-seg" id="ss4"></div>
+            </div>
+            <span class="str-label" id="strLabel"></span>
+            <span class="ferr" id="errPass">Use at least 8 characters.</span>
+          </div>
+
+          <div class="field-grp" id="grpConfirm">
+            <label class="flabel" for="confirmPasswordField">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Confirm Password <span class="req">*</span>
+            </label>
+            <div class="ishell">
+              <input class="ifield ifield-pad" type="password" id="confirmPasswordField" placeholder="Re-enter password" autocomplete="new-password" oninput="clearErr('grpConfirm')"/>
+              <button type="button" class="eye-btn" onclick="togglePass('confirmPasswordField',this)" aria-label="Toggle">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+              <span class="iglow" aria-hidden="true"></span>
+            </div>
+            <span class="ferr" id="errConfirm">Passwords do not match.</span>
+          </div>
+        </div>
+
+        <!-- Phone -->
+        <div class="field-grp">
+          <label class="flabel" for="phoneField">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12 19.79 19.79 0 0 1 1.07 3.37 2 2 0 0 1 3 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Phone Number
+          </label>
+          <div class="ishell">
+            <input class="ifield" type="tel" id="phoneField" placeholder="+92-300-1234567" autocomplete="tel"/>
+            <span class="iglow" aria-hidden="true"></span>
+          </div>
+        </div>
+
+        <!-- DOB & Gender -->
+        <div class="two-col">
+          <div class="field-grp" id="grpDob">
+            <label class="flabel" for="dobPicker">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Date of Birth <span class="req">*</span>
+            </label>
+            <div class="ishell">
+              <input class="ifield" type="date" id="dobPicker" oninput="clearErr('grpDob')"/>
+              <span class="iglow" aria-hidden="true"></span>
+            </div>
+            <span class="ferr" id="errDob">Date of birth is required.</span>
+          </div>
+
+          <div class="field-grp">
+            <label class="flabel" for="genderSelect">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+              Gender
+            </label>
+            <div class="sel-wrap">
+              <select class="ifield sel-field" id="genderSelect">
+                <option value="" disabled selected>Select gender</option>
+                <option>Female</option>
+                <option>Male</option>
+                <option>Other</option>
+                <option>Prefer not to say</option>
+              </select>
+              <span class="sel-arrow" aria-hidden="true">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- City & Country -->
+        <div class="two-col">
+          <div class="field-grp">
+            <label class="flabel" for="cityField">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              City
+            </label>
+            <div class="ishell">
+              <input class="ifield" type="text" id="cityField" placeholder="Your city"/>
+              <span class="iglow" aria-hidden="true"></span>
+            </div>
+          </div>
+
+          <div class="field-grp">
+            <label class="flabel" for="countrySelect">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              Country
+            </label>
+            <div class="sel-wrap">
+              <select class="ifield sel-field" id="countrySelect">
+                <option value="" disabled selected>Select country</option>
+                <option>Pakistan</option>
+                <option>United States</option>
+                <option>United Kingdom</option>
+                <option>Canada</option>
+                <option>Australia</option>
+                <option>UAE</option>
+                <option>Saudi Arabia</option>
+                <option>Other</option>
+              </select>
+              <span class="sel-arrow" aria-hidden="true">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Emergency Contact -->
+        <div class="section-block">
+          <div class="section-head">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12 19.79 19.79 0 0 1 1.07 3.37 2 2 0 0 1 3 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Emergency Contact
+            <span class="opt-pill">Optional</span>
+          </div>
+          <div class="two-col">
+            <div class="field-grp">
+              <label class="flabel" for="emergNameField">Contact Name</label>
+              <div class="ishell">
+                <input class="ifield" type="text" id="emergNameField" placeholder="Contact name"/>
+                <span class="iglow" aria-hidden="true"></span>
+              </div>
+            </div>
+            <div class="field-grp">
+              <label class="flabel" for="emergPhoneField">Contact Phone</label>
+              <div class="ishell">
+                <input class="ifield" type="tel" id="emergPhoneField" placeholder="Contact phone"/>
+                <span class="iglow" aria-hidden="true"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terms -->
+        <div class="field-grp" id="grpTerms">
+          <label class="check-label">
+            <input type="checkbox" class="check-raw" id="termsCheckbox" onchange="clearErr('grpTerms')"/>
+            <span class="check-box">
+              <svg width="10" height="8" viewBox="0 0 12 10" fill="none"><polyline points="1,5 4.5,8.5 11,1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span>I agree to the <a href="#" class="terms-link" onclick="return false;">Terms &amp; Conditions</a></span>
+          </label>
+          <span class="ferr" id="errTerms">You must agree to the terms.</span>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="submit-btn" id="signupBtn">
+          <span class="btn-inner" id="btnText">
+            Create Account
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" class="btn-arrow"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </span>
+          <span class="btn-loader" id="btnLoader" style="display:none">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" class="spin"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          </span>
+          <span class="btn-shine" aria-hidden="true"></span>
+        </button>
+
+        <!-- Messages -->
+        <div class="msg-box err-box" id="errBox" style="display:none"><span>⚠</span><span id="errBoxMsg"></span></div>
+        <div class="msg-box ok-box"  id="okBox"  style="display:none"><span>✓</span><span id="okBoxMsg"></span></div>
+
+      </form>
+
+      <div class="divider"><span></span><em>OR</em><span></span></div>
+      <p class="switch-row">Already have an account? <a href="login.html" class="switch-link">Login →</a></p>
+
+      </div><!-- end scroll-body -->
+    </div>
+  </main>
+</div>
+
+<script src="Javascript/signup.js"></script>
+</body>
+</html>

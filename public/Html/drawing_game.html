@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Draw — Canvas App</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="drawing_game"/>
+<link rel="stylesheet" href="../Css/drawing_game.css">
+   <script src="../Javascript/drawing_game.js" defer></script>
+</head>
+<body class="tool-pen">
+
+<div id="toolbar">
+
+  <!-- Tools row -->
+  <div class="tb-group">
+     <a href="game_home_page.html" class="tool-btn">🏠</a>
+    <button class="tool-btn active" id="btn-pen"      title="Pen [P]"       onclick="setTool('pen')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4z"/></svg>
+    </button>
+    <button class="tool-btn" id="btn-eraser"   title="Eraser [E]"     onclick="setTool('eraser')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20H7L3 16l10-10 7 7-3 3"/><line x1="6" y1="18" x2="10" y2="14"/></svg>
+    </button>
+    <button class="tool-btn" id="btn-line"     title="Line [L]"       onclick="setTool('line')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="4" y1="20" x2="20" y2="4"/></svg>
+    </button>
+    <button class="tool-btn" id="btn-rect"     title="Rectangle [R]"  onclick="setTool('rect')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/></svg>
+    </button>
+    <button class="tool-btn" id="btn-circle"   title="Circle [C]"     onclick="setTool('circle')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/></svg>
+    </button>
+    <button class="tool-btn" id="btn-triangle" title="Triangle [T]"   onclick="setTool('triangle')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><polygon points="12,3 22,21 2,21"/></svg>
+    </button>
+    <button class="tool-btn" id="btn-arrow"    title="Arrow [A]"      onclick="setTool('arrow')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="19" x2="19" y2="5"/><polyline points="9,5 19,5 19,15"/></svg>
+    </button>
+    <button class="tool-btn" id="btn-text"     title="Text [X]"       onclick="setTool('text')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7V4h16v3"/><line x1="12" y1="4" x2="12" y2="20"/><line x1="8" y1="20" x2="16" y2="20"/></svg>
+    </button>
+    <button class="tool-btn" id="btn-fill"     title="Bucket Fill [F]" onclick="setTool('fill')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 11l-8-8-8.5 8.5a5.5 5.5 0 007.78 7.78L19 11z"/><path d="M20 16s2 1.5 2 3a2 2 0 01-4 0c0-1.5 2-3 2-3z"/></svg>
+    </button>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- Fill toggle -->
+  <label id="fillLabel"><input type="checkbox" id="fillShape"/> Fill</label>
+
+  <div class="sep"></div>
+
+  <!-- Colors -->
+  <div class="tb-group">
+    <div class="color-grid">
+      <div class="swatch active" style="background:#000000" data-color="#000000" onclick="setSwatch(this)"></div>
+      <div class="swatch" style="background:#e53935" data-color="#e53935" onclick="setSwatch(this)"></div>
+      <div class="swatch" style="background:#1e88e5" data-color="#1e88e5" onclick="setSwatch(this)"></div>
+      <div class="swatch" style="background:#2e7d32" data-color="#2e7d32" onclick="setSwatch(this)"></div>
+      <div class="swatch" style="background:#fdd835" data-color="#fdd835" onclick="setSwatch(this)"></div>
+      <div class="swatch" style="background:#fb8c00" data-color="#fb8c00" onclick="setSwatch(this)"></div>
+      <div class="swatch" style="background:#8e24aa" data-color="#8e24aa" onclick="setSwatch(this)"></div>
+      <div class="swatch" style="background:#f48fb1" data-color="#f48fb1" onclick="setSwatch(this)"></div>
+    </div>
+    <span class="tb-label">Custom:</span>
+    <input type="color" id="colorPicker" value="#000000" oninput="setCustomColor(this.value)" title="Custom color"/>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- Size -->
+  <div class="tb-group">
+    <span class="tb-label">Size:</span>
+    <input type="range" id="sizeSlider" min="1" max="60" value="5" oninput="setSize(+this.value)"/>
+    <span id="sizeNum">5</span>
+    <div id="sizeDot" style="width:8px;height:8px;background:#000;"></div>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- Actions -->
+  <div class="tb-group">
+    <button class="act-btn"        onclick="undo()"     title="Ctrl+Z">↩ Undo</button>
+    <button class="act-btn"        onclick="redo()"     title="Ctrl+Y">↪ Redo</button>
+    <button class="act-btn save"   onclick="saveImg()">⬇ Save</button>
+    <button class="act-btn danger" onclick="clearAll()">✕ Clear</button>
+  </div>
+
+</div>
+
+<!-- Canvas -->
+<div id="wrap">
+  <canvas id="mainCanvas"></canvas>
+  <canvas id="overlayCanvas"></canvas>
+  <div id="status">x: 0, y: 0</div>
+  <div id="hint">P E L R C T A X F &nbsp;|&nbsp; Ctrl+Z/Y</div>
+</div>
+
+<!-- Floating text input -->
+<div id="textBox"><input id="textInput" type="text" placeholder="Type, then Enter"/></div>
+
+</body>
+</html>

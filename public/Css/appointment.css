@@ -1,0 +1,679 @@
+/* ========================================
+   APPOINTMENT BOOKING STYLES
+   ======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #5AB89A;
+    --primary-dark: #2D5244;
+    --primary-medium: #3A6351;
+    --primary-light: #D4F1E8;
+    --primary-ultra-light: #EBF8F4;
+    --bg-main: #F5F7FA;
+    --bg-card: #FFFFFF;
+    --text-dark: #1A202C;
+    --text-medium: #2D3748;
+    --text-muted: #4A5568;
+    --text-light: #718096;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.15);
+    --shadow-primary: 0 4px 15px rgba(90, 184, 154, 0.25);
+    --border-color: #E2E8F0;
+    --success-color: #48BB78;
+    --danger-color: #F56565;
+}
+
+body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--bg-main);
+    color: var(--text-dark);
+    min-height: 100vh;
+}
+
+/* ========= HEADER ========= */
+.booking-header {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-icon {
+    font-size: 36px;
+}
+
+.header-text {
+    flex: 1;
+}
+
+.header-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text-dark);
+    font-family: 'Playfair Display', serif;
+    letter-spacing: -0.5px;
+    margin-bottom: 5px;
+}
+
+.header-subtitle {
+    font-size: 14px;
+    color: var(--text-light);
+    font-weight: 500;
+}
+
+.back-button {
+    background: var(--primary-ultra-light);
+    color: var(--primary-dark);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.back-button:hover {
+    background: var(--primary-light);
+    transform: scale(1.05);
+}
+
+/* ========= MAIN CONTAINER ========= */
+.booking-main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px 40px;
+}
+
+.booking-container {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 30px;
+}
+
+/* ========= SECTIONS ========= */
+.selection-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.section-container {
+    background: var(--bg-card);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.section-icon {
+    font-size: 28px;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-dark);
+    font-family: 'Playfair Display', serif;
+}
+
+.optional-label {
+    font-size: 13px;
+    color: var(--text-light);
+    font-style: italic;
+}
+
+/* ========= PSYCHOLOGISTS GRID ========= */
+.psychologists-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 450px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.psychologists-grid::-webkit-scrollbar {
+    width: 8px;
+}
+
+.psychologists-grid::-webkit-scrollbar-track {
+    background: var(--primary-ultra-light);
+    border-radius: 4px;
+}
+
+.psychologists-grid::-webkit-scrollbar-thumb {
+    background: var(--primary-light);
+    border-radius: 4px;
+}
+
+.psychologist-card {
+    background: white;
+    border-radius: 16px;
+    border: 2px solid var(--border-color);
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    gap: 15px;
+}
+
+.psychologist-card:hover {
+    background: var(--primary-ultra-light);
+    border-color: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-primary);
+}
+
+.psychologist-card.selected {
+    border-color: var(--primary-color);
+    border-width: 3px;
+    background: linear-gradient(135deg, white, var(--primary-ultra-light));
+    box-shadow: var(--shadow-primary);
+}
+
+.doctor-avatar {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: white;
+    flex-shrink: 0;
+}
+
+.doctor-info {
+    flex: 1;
+}
+
+.doctor-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+}
+
+.doctor-specialty {
+    font-size: 13px;
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.doctor-qualification {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.doctor-fee {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-top: 8px;
+}
+
+/* ========= THERAPY DOGS GRID ========= */
+.dogs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    max-height: 320px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.dogs-grid::-webkit-scrollbar {
+    width: 6px;
+}
+
+.dog-card {
+    background: white;
+    border-radius: 14px;
+    border: 2px solid var(--border-color);
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.dog-card:hover {
+    background: var(--primary-ultra-light);
+    border-color: var(--primary-light);
+    transform: translateY(-2px);
+}
+
+.dog-card.selected {
+    border-color: var(--primary-color);
+    background: var(--primary-ultra-light);
+}
+
+.dog-avatar {
+    font-size: 48px;
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.dog-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+}
+
+.dog-breed {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+}
+
+.dog-specialty {
+    font-size: 11px;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* ========= BOOKING PANEL ========= */
+.booking-panel {
+    background: var(--bg-card);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color);
+    position: sticky;
+    top: 90px;
+    height: fit-content;
+}
+
+.panel-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-dark);
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 20px;
+}
+
+.detail-card {
+    background: var(--primary-ultra-light);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.detail-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.detail-value {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+/* ========= TOGGLE ========= */
+.toggle-container {
+    background: rgba(90, 184, 154, 0.08);
+    border-radius: 12px;
+    padding: 15px;
+    border: 2px solid var(--primary-light);
+    margin-bottom: 15px;
+}
+
+.therapy-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+}
+
+.therapy-checkbox input {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--primary-color);
+}
+
+.toggle-description {
+    font-size: 12px;
+    color: var(--text-muted);
+    padding-left: 30px;
+}
+
+/* ========= INPUTS ========= */
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-dark);
+    display: block;
+    margin-bottom: 6px;
+}
+
+.date-input, .custom-select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.3s ease;
+    background: var(--primary-ultra-light);
+}
+
+.date-input:focus, .custom-select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.notes-area {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    resize: vertical;
+    background: var(--primary-ultra-light);
+    transition: all 0.3s ease;
+}
+
+.notes-area:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* ========= FEE CONTAINER ========= */
+.fee-container {
+    background: linear-gradient(135deg, var(--primary-ultra-light), var(--primary-light));
+    border-radius: 14px;
+    padding: 18px;
+    border: 2px solid var(--primary-light);
+    margin: 20px 0;
+}
+
+.fee-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.fee-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.fee-amount {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary-dark);
+}
+
+.fee-note {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* ========= CONFIRM BUTTON ========= */
+.confirm-button {
+    width: 100%;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-medium));
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 16px;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.confirm-button:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--primary-dark), #1a3a2f);
+    transform: scale(1.02);
+    box-shadow: var(--shadow-primary);
+}
+
+.confirm-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ========= INFO NOTE ========= */
+.info-note {
+    background: rgba(66, 153, 225, 0.1);
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid rgba(66, 153, 225, 0.3);
+}
+
+.info-note strong {
+    display: block;
+    font-size: 13px;
+    color: #2C5282;
+    margin-bottom: 8px;
+}
+
+.info-note p {
+    font-size: 12px;
+    color: #2D3748;
+    line-height: 1.6;
+}
+
+/* ========= MODAL ========= */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    max-width: 400px;
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-icon {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+.modal-content h3 {
+    font-size: 24px;
+    color: var(--primary-dark);
+    margin-bottom: 10px;
+}
+
+.modal-content p {
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+
+.modal-btn {
+    background: var(--primary-color);
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all 0.3s ease;
+}
+
+.modal-btn:hover {
+    background: var(--primary-dark);
+    transform: scale(1.05);
+}
+
+/* ========= LOADING ========= */
+.loading-spinner {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-light);
+}
+
+/* ========= RESPONSIVE ========= */
+@media (max-width: 1024px) {
+    .booking-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .booking-panel {
+        position: static;
+    }
+    
+    .header-content {
+        padding: 15px 20px;
+        flex-wrap: wrap;
+    }
+    
+    .booking-main {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-title {
+        font-size: 20px;
+    }
+    
+    .section-title {
+        font-size: 18px;
+    }
+    
+    .psychologist-card {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .doctor-avatar {
+        width: 60px;
+        height: 60px;
+        font-size: 28px;
+        margin: 0 auto;
+    }
+    
+    .dogs-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* ========= IMAGE STYLES ========= */
+.doctor-avatar img,
+.dog-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.doctor-avatar {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.doctor-avatar img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+}
+
+.dog-avatar {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 8px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-ultra-light);
+}
+
+.dog-avatar img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* Error toast for duplicate booking */
+.upload-toast.error {
+    background: #e74c3c;
+}
